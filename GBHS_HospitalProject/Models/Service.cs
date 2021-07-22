@@ -16,5 +16,8 @@ namespace GBHS_HospitalProject.Models
         public string ServiceEmail { get; set; }
         public string ServiceLocation { get; set; }
         public string ServiceInfo { get; set; }
+
+        //a service can have many locations
+        public ICollection<Location> Locations { get; set; }
     }
 }
