@@ -15,6 +15,7 @@ namespace GBHS_HospitalProject.Models
     [ForeignKey("Departments")]
     public int DepartmentID { get; set; }
     public virtual Department Departments { get; set; }
+    public ICollection<Booking> SpecialistBookings { get; set; }
   }
   public class SpecialistDto
   {

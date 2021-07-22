@@ -35,8 +35,10 @@ namespace GBHS_HospitalProject.Models
         public DbSet<Department> Departments { get; set; }
         //Add Specialist entity to the system
         public DbSet<Specialist> Specialists { get; set; }
-
-
+        //Add Patient entity to the system
+        public DbSet<Patient> Patients { get; set; }
+        //Add Booking entity to the system
+        public DbSet<Booking> Bookings { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

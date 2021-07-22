@@ -202,13 +202,31 @@
     <Compile Include="Migrations\202107221728390_Specialist-table.Designer.cs">
       <DependentUpon>202107221728390_Specialist-table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107221837240_Patient-Appointment_Feature.cs" />
+    <Compile Include="Migrations\202107221837240_Patient-Appointment_Feature.Designer.cs">
+      <DependentUpon>202107221837240_Patient-Appointment_Feature.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107221840151_Booking-Appointment_Feature.cs" />
+    <Compile Include="Migrations\202107221840151_Booking-Appointment_Feature.Designer.cs">
+      <DependentUpon>202107221840151_Booking-Appointment_Feature.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107221911137_Patient-Booking-Relationship-Appointment_Feature.cs" />
+    <Compile Include="Migrations\202107221911137_Patient-Booking-Relationship-Appointment_Feature.Designer.cs">
+      <DependentUpon>202107221911137_Patient-Booking-Relationship-Appointment_Feature.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107221926173_Specialist-Booking-Relationship-Appointment_Feature.cs" />
+    <Compile Include="Migrations\202107221926173_Specialist-Booking-Relationship-Appointment_Feature.Designer.cs">
+      <DependentUpon>202107221926173_Specialist-Booking-Relationship-Appointment_Feature.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\LocationxService.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Specialist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -299,6 +317,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107221728390_Specialist-table.resx">
       <DependentUpon>202107221728390_Specialist-table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107221837240_Patient-Appointment_Feature.resx">
+      <DependentUpon>202107221837240_Patient-Appointment_Feature.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107221840151_Booking-Appointment_Feature.resx">
+      <DependentUpon>202107221840151_Booking-Appointment_Feature.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107221911137_Patient-Booking-Relationship-Appointment_Feature.resx">
+      <DependentUpon>202107221911137_Patient-Booking-Relationship-Appointment_Feature.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107221926173_Specialist-Booking-Relationship-Appointment_Feature.resx">
+      <DependentUpon>202107221926173_Specialist-Booking-Relationship-Appointment_Feature.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
