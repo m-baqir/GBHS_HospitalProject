@@ -194,13 +194,23 @@
     <Compile Include="Migrations\202107210225453_bridgetable.Designer.cs">
       <DependentUpon>202107210225453_bridgetable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107221631352_add-Suong-table.cs" />
+    <Compile Include="Migrations\202107221631352_add-Suong-table.Designer.cs">
+      <DependentUpon>202107221631352_add-Suong-table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107221728390_Specialist-table.cs" />
+    <Compile Include="Migrations\202107221728390_Specialist-table.Designer.cs">
+      <DependentUpon>202107221728390_Specialist-table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\LocationxService.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\Specialist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -283,6 +293,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107210225453_bridgetable.resx">
       <DependentUpon>202107210225453_bridgetable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107221631352_add-Suong-table.resx">
+      <DependentUpon>202107221631352_add-Suong-table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107221728390_Specialist-table.resx">
+      <DependentUpon>202107221728390_Specialist-table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -31,6 +31,10 @@ namespace GBHS_HospitalProject.Models
         public DbSet<Service> Services { get; set; }
         //Add LocationxService bridge table
         public DbSet<LocationxService> LocationxServices { get; set; }
+        //Add Department enity to the system
+        public DbSet<Department> Departments { get; set; }
+        //Add Specialist entity to the system
+        public DbSet<Specialist> Specialists { get; set; }
 
 
         public static ApplicationDbContext Create()
