@@ -40,11 +40,20 @@ namespace GBHS_HospitalProject.Controllers
         // GET: Services/Details/5
         public ActionResult Details(int id)
         {
+            DetailsService ViewModel = new DetailsService();
+
             string url = "servicesdata/findservice/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             ServiceDto selectedservice = response.Content.ReadAsAsync<ServiceDto>().Result;
+            ViewModel.SelectedService = selectedservice;
+            //show locations with this service
 
-            return View(selectedservice);
+            //continue work here
+            url = "";
+
+
+
+            return View(ViewModel);
         }
         /// <summary>
         /// an empty method to route errors through
@@ -121,7 +130,7 @@ namespace GBHS_HospitalProject.Controllers
         /// performs the actual update command in the db given id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="collection"></param>
+        /// <param name="service"></param>
         /// <returns></returns>
         // POST: Services/Edit/5
         [HttpPost]

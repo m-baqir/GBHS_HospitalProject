@@ -40,6 +40,79 @@ namespace GBHS_HospitalProject.Controllers
             return ServiceDtos;
         }
 
+        [HttpGet]
+        [ResponseType(typeof(ServiceDto))]
+        public IHttpActionResult ListServicesForLocation(int id)
+        {
+            //all services that match with locationid
+            List<Service> services = db.Services.Where(
+                s => s.Locations.Any(
+                    l => l.LocationID == id
+                )).ToList();
+            List<ServiceDto> ServiceDtos = new List<ServiceDto>();
+
+            services.ForEach(a => ServiceDtos.Add(new ServiceDto()
+            {
+                ServiceID = a.ServiceID,
+                ServiceName = a.ServiceName,
+                ServicePhone = a.ServicePhone,
+                ServiceEmail = a.ServiceEmail,
+                ServiceLocation = a.ServiceLocation,
+                ServiceInfo = a.ServiceInfo,
+                ServiceHasPic = a.ServiceHasPic,
+                PicExtension = a.PicExtension,
+                Locations = a.Locations
+            }));
+
+            return Ok(ServiceDtos);
+        }
+        /// <summary>
+        /// associate a service with a location given ids for both
+        /// </summary>
+        /// <param name="serviceid"></param>
+        /// <param name="locationid"></param>
+        /// <returns></returns>
+
+        [HttpPost]
+        [Route("api/ServicesData/AssociateServiceWithLocation/{serviceid}/{locationid}")]
+        public IHttpActionResult AssociateServiceWithLocation(int serviceid, int locationid)
+        {
+            Service SelectedService = db.Services.Include(a => a.Locations).Where(a => a.ServiceID == serviceid).FirstOrDefault();
+            Location SelectedLocation = db.Locations.Find(locationid);
+
+            if(SelectedService==null || SelectedLocation == null)
+            {
+                return NotFound();
+            }
+
+            SelectedService.Locations.Add(SelectedLocation);
+            db.SaveChanges();
+            return Ok();
+        }
+        /// <summary>
+        /// removes an association between service and location given their ids
+        /// </summary>
+        /// <param name="serviceid"></param>
+        /// <param name="locationid"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/ServiceData/UnAssociateServiceWithLocation/{serviceid}/{locationid}")]
+        public IHttpActionResult UnAssociateAnimalWithKeeper(int serviceid, int locationid)
+        {
+            Service SelectedService = db.Services.Include(a => a.Locations).Where(a => a.ServiceID == serviceid).FirstOrDefault();
+            Location SelectedLocation = db.Locations.Find(locationid);
+
+            if (SelectedService == null || SelectedLocation == null)
+            {
+                return NotFound();
+            }
+
+            SelectedService.Locations.Remove(SelectedLocation);
+            db.SaveChanges();
+
+            return Ok();
+        }
+      
         /// <summary>
         /// finds a specific service given its id
         /// </summary>
