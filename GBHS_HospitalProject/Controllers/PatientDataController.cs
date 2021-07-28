@@ -15,16 +15,6 @@ namespace GBHS_HospitalProject.Controllers
     public class PatientDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        
-        [HttpGet]
-        [ResponseType(typeof(PatientDto))]
-        public IHttpActionResult ListPatients()
-        {
-            List<Patient> Patients = db.Patients.ToList();
-            List<PatientDto> PatientDtos = new List<PatientDto>();
-            Patients.ForEach(p => PatientDtos.Add(new PatientDto(p.PatientID, p.PatientFirstName, p.PatientLastName, p.PatientPhoneNumber, p.PatientEmail, p.PatientGender)));
-            return Ok(PatientDtos);
-        }
 
         /// <summary>
         /// Return all patients
@@ -36,7 +26,9 @@ namespace GBHS_HospitalProject.Controllers
         /// <example>
         /// GET: api/PatientData/GetPatients
         /// </example>
-        public IHttpActionResult GetPatients()
+        [HttpGet]
+        [ResponseType(typeof(PatientDto))]
+        public IHttpActionResult ListPatients()
         {
             List<Patient> Patients = db.Patients.ToList();
             List<PatientDto> PatientDtos = new List<PatientDto>();
@@ -162,7 +154,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <returns>
         /// HEADER: 200 (OK)
         /// or
-        /// HEADER: 400 (NOT FOUND)
+        /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
         /// POST: api/PatientData/DeletePatient/1
