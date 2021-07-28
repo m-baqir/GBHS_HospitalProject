@@ -10,7 +10,7 @@ namespace GBHS_HospitalProject.Models
     public class Booking
     {
         [Key]
-        public string BookingID { get; set; }
+        public int BookingID { get; set; }
         public DateTime BookingStartTime { get; set; }
         public DateTime BookingEndTime { get; set; }
         public string BookingReasonToVist { get; set; }
@@ -22,6 +22,21 @@ namespace GBHS_HospitalProject.Models
         [ForeignKey("Specialist")]
         public int? SpecialistID;
         public virtual Specialist Specialist { get; set; }
+    }
+
+    //DTO class
+    public class BookingDto
+    {
+        public int BookingID { get; set; }
+        public DateTime BookingStartTime { get; set; }
+        public DateTime BookingEndTime { get; set; }
+        public string BookingReasonToVisit { get; set; }
+        public int PatientID { get; set; }
+        public string PatientFirstName { get; set; }
+        public string PatientLastName { get; set; }
+        public int SpecialistID { get; set; }
+        public string SpecialistFirstName { get; set; }
+        public string SpecialistLastName { get; set; }
     }
 }
 
