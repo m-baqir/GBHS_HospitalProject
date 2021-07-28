@@ -20,82 +20,145 @@ namespace GBHS_HospitalProject.Controllers
             client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:44387/api/");
         }
-
+        /// <summary>
+        /// list of locations
+        /// </summary>
+        /// <returns></returns>
         // GET: Location
-        public ActionResult Index()
+        public ActionResult List()
         {
-            return View();
+            string url = "locationsdata/listlocations";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<LocationDto> Locations = response.Content.ReadAsAsync<IEnumerable<LocationDto>>().Result;
+            return View(Locations);
         }
-
+        /// <summary>
+        /// details page of a location
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: Location/Details/5
         public ActionResult Details(int id)
         {
+            DetailsLocation ViewModel = new DetailsLocation();
+            //get location details
+            string url = "locationsdata/findlocation/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            LocationDto SelectedLocation = response.Content.ReadAsAsync<LocationDto>().Result;
+            ViewModel.SelectedLocation = SelectedLocation;
+
+            //get all services at this location
+            url = "servicesdata/listservicesforlocation/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<ServiceDto> ServicesAtLocation = response.Content.ReadAsAsync<IEnumerable<ServiceDto>>().Result;
+
+            ViewModel.ServicesAtLocation = ServicesAtLocation;
+
+            return View(ViewModel);
+        }
+        public ActionResult Error()
+        {
+
             return View();
         }
 
         // GET: Location/Create
-        public ActionResult Create()
+        public ActionResult New()
         {
-            return View();
+            string url = "servicessdata/listservices";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<ServiceDto> ServiceOptions = response.Content.ReadAsAsync<IEnumerable<ServiceDto>>().Result;
+            return View(ServiceOptions);           
         }
 
         // POST: Location/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Location location)
         {
-            try
+            string url = "locationsdata/addlocation";
+
+            string jsonpayload = jss.Serialize(location);
+            Debug.WriteLine(jsonpayload);
+
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+            if (response.IsSuccessStatusCode)
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
-            catch
+            else
             {
-                return View();
+                return RedirectToAction("Error");
             }
         }
 
         // GET: Location/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            UpdateLocation ViewModel = new UpdateLocation();
+            //current location
+            string url = "locationsdata/findlocation/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            LocationDto SelectedLocation = response.Content.ReadAsAsync<LocationDto>().Result;
+            ViewModel.SelectedLocation = SelectedLocation;
+            //list of services
+            url = "servicessdata/listservices";
+            response = client.GetAsync(url).Result;
+            IEnumerable<ServiceDto> ServiceOptions = response.Content.ReadAsAsync<IEnumerable<ServiceDto>>().Result;
+            ViewModel.ServicesOptions = ServiceOptions;
+
+            return View(ViewModel);
         }
 
         // POST: Location/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Update(int id, Location location)
         {
-            try
-            {
-                // TODO: Add update logic here
+            string url = "locationsdata/updatelocation/" + id;
+            string jsonpayload = jss.Serialize(location);
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+            Debug.WriteLine(content);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Error");
             }
         }
 
         // GET: Location/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteConfirm(int id)
         {
-            return View();
+            string url = "locationsdata/findlocation/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            LocationDto SelectedLocation = response.Content.ReadAsAsync<LocationDto>().Result;
+            return View(SelectedLocation);
         }
 
         // POST: Location/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
+            string url = "locationsdata/deletelocation/" + id;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+            if (response.IsSuccessStatusCode)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
-            catch
+            else
             {
-                return View();
+                return RedirectToAction("Error");
             }
         }
     }

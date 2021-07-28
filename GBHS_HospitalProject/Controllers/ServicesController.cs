@@ -46,12 +46,18 @@ namespace GBHS_HospitalProject.Controllers
             HttpResponseMessage response = client.GetAsync(url).Result;
             ServiceDto selectedservice = response.Content.ReadAsAsync<ServiceDto>().Result;
             ViewModel.SelectedService = selectedservice;
+
             //show locations with this service
+            url = "locationsdata/listlocationsforservice/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<LocationDto> LocationsWithService = response.Content.ReadAsAsync<IEnumerable<LocationDto>>().Result;
+            ViewModel.LocationsWithService = LocationsWithService;
 
-            //continue work here
-            url = "";
-
-
+            //show locations without this service
+            url = "locationsdata/listlocationswithoutservice/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<LocationDto> LocationsWithoutService = response.Content.ReadAsAsync<IEnumerable<LocationDto>>().Result;
+            ViewModel.LocationsWithoutService = LocationsWithoutService;
 
             return View(ViewModel);
         }
@@ -62,6 +68,28 @@ namespace GBHS_HospitalProject.Controllers
         public ActionResult Error()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Associate(int id, int locationid)
+        {
+            string url = "servicesdata/associateservicewithlocation/" + id+"/"+locationid;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            return RedirectToAction("Details/" + id);
+        }
+
+        [HttpGet]
+        public ActionResult UnAssociate(int id, int locationid)
+        {
+            string url = "servicesdata/unassociateservicewithlocation/" + id + "/" + locationid;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            return RedirectToAction("Details/" + id);
         }
         /// <summary>
         /// this method presents the form elements tot he user to create a new service in the database

@@ -97,7 +97,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/ServiceData/UnAssociateServiceWithLocation/{serviceid}/{locationid}")]
-        public IHttpActionResult UnAssociateAnimalWithKeeper(int serviceid, int locationid)
+        public IHttpActionResult UnAssociateServiceWithLocation(int serviceid, int locationid)
         {
             Service SelectedService = db.Services.Include(a => a.Locations).Where(a => a.ServiceID == serviceid).FirstOrDefault();
             Location SelectedLocation = db.Locations.Find(locationid);
