@@ -12,12 +12,31 @@ namespace GBHS_HospitalProject.Models
         [Key]
         public int ServiceID { get; set; }
         public string ServiceName { get; set; }
-        public float ServicePhone { get; set; }
+        public string ServicePhone { get; set; }
         public string ServiceEmail { get; set; }
         public string ServiceLocation { get; set; }
         public string ServiceInfo { get; set; }
+        public bool ServiceHasPic { get; set; }
+        public string PicExtension { get; set; }
 
         //a service can have many locations
         public ICollection<Location> Locations { get; set; }
+    }
+
+    public class ServiceDto
+    {
+        [Key]
+        public int ServiceID { get; set; }
+        public string ServiceName { get; set; }
+        public string ServicePhone { get; set; }
+        public string ServiceEmail { get; set; }
+        public string ServiceLocation { get; set; }
+        public string ServiceInfo { get; set; }
+        public bool ServiceHasPic { get; set; }
+        public string PicExtension { get; set; }
+
+        //a service can have many locations
+        public ICollection<Location> Locations { get; set; }
+
     }
 }
