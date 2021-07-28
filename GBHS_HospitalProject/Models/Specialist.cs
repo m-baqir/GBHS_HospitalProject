@@ -11,8 +11,9 @@ namespace GBHS_HospitalProject.Models
   {
     [Key]
     public int SpecialistID { get; set;}
-    public string SpecialistName { get; set; }
-    [ForeignKey("Departments")]
+    public string SpecialistFirstName { get; set; }
+    public string SpecialistLastName { get; set; }
+        [ForeignKey("Departments")]
     public int DepartmentID { get; set; }
     public virtual Department Departments { get; set; }
     public ICollection<Booking> SpecialistBookings { get; set; }
@@ -20,7 +21,8 @@ namespace GBHS_HospitalProject.Models
   public class SpecialistDto
   {
     public int SpecialistID { get; set; }
-    public string SpecialistName { get; set; }
+    public string SpecialistFirstName { get; set; }
+    public string SpecialistLastName { get; set; }
     public int DepartmentID { get; set; }
     public string DepartmentName { get; set; }
   }

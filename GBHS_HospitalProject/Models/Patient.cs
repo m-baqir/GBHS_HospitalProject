@@ -23,6 +23,16 @@ namespace GBHS_HospitalProject.Models
     //DTO
     public class PatientDto
     {
+        public PatientDto(int patientID, string patientFirstName, string patientLastName, string patientPhoneNumber, string patientEmail, string patientGender)
+        {
+            PatientID = patientID;
+            PatientFirstName = patientFirstName;
+            PatientLastName = patientLastName;
+            PatientPhoneNumber = patientPhoneNumber;
+            PatientEmail = patientEmail;
+            PatientGender = patientGender;
+        }
+
         public int PatientID { get; set; }
         public string PatientFirstName { get; set; }
         public string PatientLastName { get; set; }
