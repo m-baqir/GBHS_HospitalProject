@@ -1,8 +1,8 @@
 # GBHS_HospitalProject for HTTP-5204
 ---
 Team Members:
-- Mohammad Baqir
+- Mohammad Baqir - Feature: Location and Service Directory. Entities: (Location, Service)
 - Ambaram Srivastava
 - Suong Tran
-- Natalya Kolesnikova
+- Natalya Kolesnikova - Feature: Feedback Form. Entities: (Feedback)
 - Thai Vo
