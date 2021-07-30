@@ -1,0 +1,57 @@
+﻿@model IEnumerable<GBHS_HospitalProject.Models.PatientDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of patients</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientFirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientLastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientGender)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientFirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientLastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientPhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientGender)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PatientID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PatientID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PatientID })
+        </td>
+    </tr>
+}
+
+</table>

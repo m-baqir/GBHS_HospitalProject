@@ -28,6 +28,7 @@ namespace GBHS_HospitalProject.Controllers
         /// </example>
         [HttpGet]
         [ResponseType(typeof(PatientDto))]
+        [Authorize(Roles ="Admin")]
         public IHttpActionResult ListPatients()
         {
             List<Patient> Patients = db.Patients.ToList();
@@ -51,6 +52,7 @@ namespace GBHS_HospitalProject.Controllers
         /// </example>
         [HttpGet]
         [ResponseType(typeof(PatientDto))]
+        [Authorize(Roles ="Admin,Guest")]
         public IHttpActionResult FindPatientById(int id)
         {
             Patient Patient = db.Patients.Find(id);
@@ -85,6 +87,7 @@ namespace GBHS_HospitalProject.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(void))]
+        [Authorize(Roles ="Admin,Guest")]
         public IHttpActionResult UpdatePatient(int id, Patient patient)
         {
             if (!ModelState.IsValid)
@@ -134,8 +137,10 @@ namespace GBHS_HospitalProject.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(Patient))]
+
         public IHttpActionResult AddPatient(Patient Patient)
         {
+            //TODO: for guest, if
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

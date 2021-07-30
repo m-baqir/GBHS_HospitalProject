@@ -34,10 +34,15 @@ namespace GBHS_HospitalProject.Models
         }
 
         public int PatientID { get; set; }
+        [Display(Name = "First name")]
         public string PatientFirstName { get; set; }
+        [Display(Name = "Last name")]
         public string PatientLastName { get; set; }
+        [Display(Name = "Email")]
         public string PatientEmail { get; set; }
+        [Display(Name = "Phone number")]
         public string PatientPhoneNumber { get; set; }
+        [Display(Name = "Gender")]
         public string PatientGender { get; set; }
     }
 }
