@@ -1,0 +1,30 @@
+﻿@model GBHS_HospitalProject.Models.ViewModels.UpdateService
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<form action="/services/update/@Model.SelectedService.ServiceID" method="post">
+    <div>
+        <input type="hidden" name="ServiceID" value="@Model.SelectedService.ServiceID"/>
+    </div>
+    <div>
+        <label>Name:</label> <input type="text" name="ServiceName" value="@Model.SelectedService.ServiceName"/>
+    </div>
+    <div>
+        <label>Phone:</label> <input type="text" name="ServicePhone" value="@Model.SelectedService.ServicePhone" />
+    </div>
+    <div>
+        <label>Email:</label> <input type="text" name="ServiceEmail" value="@Model.SelectedService.ServiceEmail" />
+    </div>
+    <div>
+        <label>Location:</label> <input type="text" name="ServiceLocation" value="@Model.SelectedService.ServiceLocation" />
+    </div>
+    <div>
+        <label>Info:</label> <input type="text" name="ServiceInfo" value="@Model.SelectedService.ServiceInfo" />
+    </div>
+
+    <div>
+        <input type="submit" value="Update Service"/>
+    </div>
+</form>

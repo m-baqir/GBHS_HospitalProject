@@ -1,0 +1,12 @@
+﻿@model IEnumerable<GBHS_HospitalProject.Models.LocationDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="/location/new">New Location</a>
+@foreach(var location in Model)
+{
+    <h3><a href="/location/details/@location.LocationID">@location.LocationName</a></h3>
+}
+

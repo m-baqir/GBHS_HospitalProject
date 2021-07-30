@@ -9,5 +9,6 @@ namespace GBHS_HospitalProject.Models.ViewModels
     {
         public LocationDto SelectedLocation { get; set; }
         public IEnumerable<ServiceDto> ServicesAtLocation { get; set; }
+        public IEnumerable<ServiceDto> ServicesNotAtLocation { get; set; }
     }
 }

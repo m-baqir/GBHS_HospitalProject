@@ -1,0 +1,28 @@
+﻿@model GBHS_HospitalProject.Models.ViewModels.UpdateLocation
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Location</h2>
+<form action="/location/update/@Model.SelectedLocation.LocationID" method="post">
+    <div>
+    <input type="hidden" name="LocationID" value="@Model.SelectedLocation.LocationID" />
+    </div>
+    <div>
+        <label>Name:</label> <input type="text" name="LocationName" value="@Model.SelectedLocation.LocationName" />
+    </div>
+    <div>
+        <label>Phone:</label> <input type="text" name="LocationPhone" value="@Model.SelectedLocation.LocationPhone" />
+    </div>
+    <div>
+        <label>Email:</label> <input type="text" name="LocationEmail" value="@Model.SelectedLocation.LocationEmail" />
+    </div>
+    <div>
+        <label>Location:</label> <input type="text" name="LocationAddress" value="@Model.SelectedLocation.LocationAddress" />
+    </div>
+    
+
+    <div>
+        <input type="submit" value="Update Service" />
+    </div>
+</form>

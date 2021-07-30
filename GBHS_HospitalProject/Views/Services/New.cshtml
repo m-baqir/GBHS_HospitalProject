@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>Create New Service:</h2>
+<form action="/services/create" method="post">
+    <div>
+        <label>Name:</label> <input type="text" name="ServiceName"/>
+    </div>
+    <div>
+        <label>Phone:</label> <input type="text" name="ServicePhone"/>
+    </div>
+    <div>
+        <label>Email:</label> <input type="text" name="ServiceEmail"/>
+    </div>
+    <div>
+        <label>Location:</label> <input type="text" name="ServiceLocation"/>
+    </div>
+    <div>
+        <label>Info:</label> <input type="text" name="ServiceInfo"/>
+    </div>
+    <div>
+        <input type="submit" value="Add Service"/>
+    </div>
+</form>
+

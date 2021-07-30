@@ -66,6 +66,33 @@ namespace GBHS_HospitalProject.Controllers
 
             return Ok(ServiceDtos);
         }
+
+        [HttpGet]
+        [ResponseType(typeof(ServiceDto))]
+        public IHttpActionResult ListServicesNotForLocation(int id)
+        {
+            //all services that do not match with locationid
+            List<Service> services = db.Services.Where(
+                s => !s.Locations.Any(
+                    l => l.LocationID == id
+                )).ToList();
+            List<ServiceDto> ServiceDtos = new List<ServiceDto>();
+
+            services.ForEach(a => ServiceDtos.Add(new ServiceDto()
+            {
+                ServiceID = a.ServiceID,
+                ServiceName = a.ServiceName,
+                ServicePhone = a.ServicePhone,
+                ServiceEmail = a.ServiceEmail,
+                ServiceLocation = a.ServiceLocation,
+                ServiceInfo = a.ServiceInfo,
+                ServiceHasPic = a.ServiceHasPic,
+                PicExtension = a.PicExtension,
+                Locations = a.Locations
+            }));
+
+            return Ok(ServiceDtos);
+        }
         /// <summary>
         /// associate a service with a location given ids for both
         /// </summary>

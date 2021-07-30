@@ -1,0 +1,13 @@
+﻿@model GBHS_HospitalProject.Models.ServiceDto
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this service?</h2>
+<a href="/services/list">Cancel</a>
+<h2>@Model.ServiceName</h2>
+<form action="/services/delete/@Model.ServiceID" method="post">
+    <input type="submit" value="Confirm Delete"/>
+</form>
+
+

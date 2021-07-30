@@ -1,0 +1,32 @@
+﻿@model GBHS_HospitalProject.Models.ViewModels.DetailsLocation
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<a href="/location/list">Back to Location list</a>
+<br />
+<a href="/location/edit/@Model.SelectedLocation.LocationID">Update</a>
+<br />
+<a href="/location/deleteconfirm/@Model.SelectedLocation.LocationID">Delete</a>
+<h2>@Model.SelectedLocation.LocationName</h2>
+<p>@Model.SelectedLocation.LocationPhone</p>
+<p>@Model.SelectedLocation.LocationEmail</p>
+<p>@Model.SelectedLocation.LocationAddress</p>
+
+<div>
+    <h2>Services at @Model.SelectedLocation.LocationName:</h2>
+    @foreach (var service in Model.ServicesAtLocation)
+    {
+        <a href="/services/details/@service.ServiceID">@service.ServiceName</a>
+    }
+</div>
+<div>
+    <h2>Services Not Found at @Model.SelectedLocation.LocationName:</h2>
+    @foreach (var service in Model.ServicesNotAtLocation)
+    {
+        <a href="/services/details/@service.ServiceID">@service.ServiceName</a>
+    }
+</div>
+
+

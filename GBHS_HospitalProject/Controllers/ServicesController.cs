@@ -18,7 +18,7 @@ namespace GBHS_HospitalProject.Controllers
         static ServicesController()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44387/api/");
+            client.BaseAddress = new Uri("https://localhost:44389/api/");
         }
         /// <summary>
         /// this method lists all services in the database

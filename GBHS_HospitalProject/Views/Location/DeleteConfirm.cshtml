@@ -1,0 +1,14 @@
+﻿@model GBHS_HospitalProject.Models.LocationDto
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>DeleteConfirm</h2>
+<h2>Are you sure you want to delete this location?</h2>
+<a href="/location/list">Cancel</a>
+<h2>@Model.LocationName</h2>
+<form action="/location/delete/@Model.LocationID" method="post">
+    <input type="submit" value="Confirm Delete" />
+</form>
+
+

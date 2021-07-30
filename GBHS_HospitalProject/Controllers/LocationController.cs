@@ -18,7 +18,7 @@ namespace GBHS_HospitalProject.Controllers
         static LocationController()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44387/api/");
+            client.BaseAddress = new Uri("https://localhost:44389/api/");
         }
         /// <summary>
         /// list of locations
@@ -54,6 +54,13 @@ namespace GBHS_HospitalProject.Controllers
 
             ViewModel.ServicesAtLocation = ServicesAtLocation;
 
+            //get all services not at this location
+            url = "servicesdata/listservicesnotforlocation/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<ServiceDto> ServicesNotAtLocation = response.Content.ReadAsAsync<IEnumerable<ServiceDto>>().Result;
+
+            ViewModel.ServicesNotAtLocation = ServicesNotAtLocation;
+
             return View(ViewModel);
         }
         public ActionResult Error()
@@ -65,7 +72,7 @@ namespace GBHS_HospitalProject.Controllers
         // GET: Location/Create
         public ActionResult New()
         {
-            string url = "servicessdata/listservices";
+            string url = "servicesdata/listservices";
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<ServiceDto> ServiceOptions = response.Content.ReadAsAsync<IEnumerable<ServiceDto>>().Result;
             return View(ServiceOptions);           
@@ -106,7 +113,7 @@ namespace GBHS_HospitalProject.Controllers
             LocationDto SelectedLocation = response.Content.ReadAsAsync<LocationDto>().Result;
             ViewModel.SelectedLocation = SelectedLocation;
             //list of services
-            url = "servicessdata/listservices";
+            url = "servicesdata/listservices";
             response = client.GetAsync(url).Result;
             IEnumerable<ServiceDto> ServiceOptions = response.Content.ReadAsAsync<IEnumerable<ServiceDto>>().Result;
             ViewModel.ServicesOptions = ServiceOptions;
