@@ -392,9 +392,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107310330205_Booking-Appointment_Feature.resx">
       <DependentUpon>202107310330205_Booking-Appointment_Feature.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107310331097_Relationship-Appointment_Feature.resx">
       <DependentUpon>202107310331097_Relationship-Appointment_Feature.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
