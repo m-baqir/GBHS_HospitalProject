@@ -26,13 +26,16 @@ namespace GBHS_HospitalProject.Controllers
         /// <example>
         /// // GET: api/BookingData/ListBookings
         /// </example>
+        [HttpGet]
+        [ResponseType(typeof(BookingDto))]
+        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListBookings()
         {
             List<Booking> Bookings = db.Bookings.ToList();
             List<BookingDto> BookingDtos = new List<BookingDto>();
             Bookings.ForEach(b => BookingDtos.Add(
-                new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVist, 
-                b.Patient.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName, 
+                new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit,
+                b.Patient.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName,
                 b.Specialist.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName)));
 
             return Ok(BookingDtos);
@@ -43,7 +46,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <param name="id">Represents the booking id primary key</param>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: A patient in the system matching up to the patient id primary key
+        /// CONTENT: A booking in the system matching up to the booking id primary key
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
@@ -55,12 +58,51 @@ namespace GBHS_HospitalProject.Controllers
         public IHttpActionResult FindBookingById(string id)
         {
             Booking booking = db.Bookings.Find(id);
+
             if (booking == null)
             {
                 return NotFound();
             }
+            BookingDto bookingDto = new BookingDto(
+                booking.BookingID, booking.BookingStartTime,
+                booking.BookingEndTime, booking.BookingReasonToVisit,
+                (int)booking.PatientID, booking.Patient.PatientFirstName,
+                booking.Patient.PatientLastName, (int)booking.SpecialistID,
+                booking.Specialist.SpecialistFirstName, booking.Specialist.SpecialistLastName
+                );
+            return Ok(bookingDto);
+        }
 
-            return Ok(booking);
+        /// <summary>
+        /// Find patient's Bookings in the database by patient ID
+        /// </summary>
+        /// <param name="id">Represents the patient id primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: a list of bookings in the system matching up to the patient id primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// GET: api/BookingData/FindBookingsByPatientId/1
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(Booking))]
+        public IHttpActionResult FindBookingsByPatientId(string id)
+        {
+            List<Booking> bookings = db.Bookings.Where(b => b.Patient.PatientID.ToString() == id).ToList();
+            List<BookingDto> bookingDtos = new List<BookingDto>();
+            if (bookings == null)
+            {
+                return NotFound();
+            }
+            bookings.ForEach(b => bookingDtos.Add(new BookingDto(
+                b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit,
+                (int)b.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName,
+                (int)b.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName
+                )));
+
+            return Ok(bookingDtos);
         }
 
         /// <summary>
@@ -137,7 +179,7 @@ namespace GBHS_HospitalProject.Controllers
             }
 
             db.Bookings.Add(booking);
-
+            db.SaveChanges();
             try
             {
                 db.SaveChanges();

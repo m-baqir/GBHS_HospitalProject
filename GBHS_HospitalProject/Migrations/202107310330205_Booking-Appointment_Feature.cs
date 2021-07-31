@@ -11,10 +11,10 @@ namespace GBHS_HospitalProject.Migrations
                 "dbo.Bookings",
                 c => new
                     {
-                        BookingID = c.String(nullable: false, maxLength: 128),
+                        BookingID = c.Int(nullable: false, identity: true),
                         BookingStartTime = c.DateTime(nullable: false),
                         BookingEndTime = c.DateTime(nullable: false),
-                        BookingReasonToVist = c.String(),
+                        BookingReasonToVisit = c.String(),
                     })
                 .PrimaryKey(t => t.BookingID);
             

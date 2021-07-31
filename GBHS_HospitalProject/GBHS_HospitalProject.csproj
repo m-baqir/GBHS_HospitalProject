@@ -181,11 +181,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\LocationsDataController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientDataController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\ServicesDataController.cs" />
@@ -212,18 +214,6 @@
     <Compile Include="Migrations\202107221837240_Patient-Appointment_Feature.Designer.cs">
       <DependentUpon>202107221837240_Patient-Appointment_Feature.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202107221840151_Booking-Appointment_Feature.cs" />
-    <Compile Include="Migrations\202107221840151_Booking-Appointment_Feature.Designer.cs">
-      <DependentUpon>202107221840151_Booking-Appointment_Feature.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107221911137_Patient-Booking-Relationship-Appointment_Feature.cs" />
-    <Compile Include="Migrations\202107221911137_Patient-Booking-Relationship-Appointment_Feature.Designer.cs">
-      <DependentUpon>202107221911137_Patient-Booking-Relationship-Appointment_Feature.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107221926173_Specialist-Booking-Relationship-Appointment_Feature.cs" />
-    <Compile Include="Migrations\202107221926173_Specialist-Booking-Relationship-Appointment_Feature.Designer.cs">
-      <DependentUpon>202107221926173_Specialist-Booking-Relationship-Appointment_Feature.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202107222051281_changebridge.cs" />
     <Compile Include="Migrations\202107222051281_changebridge.Designer.cs">
       <DependentUpon>202107222051281_changebridge.cs</DependentUpon>
@@ -240,9 +230,17 @@
     <Compile Include="Migrations\202107280011418_addeddtos.Designer.cs">
       <DependentUpon>202107280011418_addeddtos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202107282031239_somependingchange.cs" />
-    <Compile Include="Migrations\202107282031239_somependingchange.Designer.cs">
-      <DependentUpon>202107282031239_somependingchange.cs</DependentUpon>
+    <Compile Include="Migrations\202107310328492_Drop-Booking-table.cs" />
+    <Compile Include="Migrations\202107310328492_Drop-Booking-table.Designer.cs">
+      <DependentUpon>202107310328492_Drop-Booking-table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107310330205_Booking-Appointment_Feature.cs" />
+    <Compile Include="Migrations\202107310330205_Booking-Appointment_Feature.Designer.cs">
+      <DependentUpon>202107310330205_Booking-Appointment_Feature.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107310331097_Relationship-Appointment_Feature.cs" />
+    <Compile Include="Migrations\202107310331097_Relationship-Appointment_Feature.Designer.cs">
+      <DependentUpon>202107310331097_Relationship-Appointment_Feature.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -255,6 +253,7 @@
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Specialist.cs" />
     <Compile Include="Models\ViewModels\DetailsLocation.cs" />
+    <Compile Include="Models\ViewModels\DetailsPatient.cs" />
     <Compile Include="Models\ViewModels\DetailsService.cs" />
     <Compile Include="Models\ViewModels\UpdateLocation.cs" />
     <Compile Include="Models\ViewModels\UpdateService.cs" />
@@ -272,6 +271,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="jsondata\patient.json" />
+    <Content Include="jsondata\specialist.json" />
+    <Content Include="jsondata\booking.json" />
+    <Content Include="jsondata\department.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -317,6 +320,17 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Patient\Create.cshtml" />
+    <Content Include="Views\Patient\Delete.cshtml" />
+    <Content Include="Views\Patient\Details.cshtml" />
+    <Content Include="Views\Patient\Edit.cshtml" />
+    <Content Include="Views\Patient\List.cshtml" />
+    <Content Include="Views\Patient\Error.cshtml" />
+    <Content Include="Views\Booking\Create.cshtml" />
+    <Content Include="Views\Booking\Delete.cshtml" />
+    <Content Include="Views\Booking\Details.cshtml" />
+    <Content Include="Views\Booking\Edit.cshtml" />
+    <Content Include="Views\Booking\List.cshtml" />
     <Content Include="Views\Services\List.cshtml" />
     <Content Include="Views\Services\Details.cshtml" />
     <Content Include="Views\Services\Edit.cshtml" />
@@ -361,15 +375,6 @@
     <EmbeddedResource Include="Migrations\202107221837240_Patient-Appointment_Feature.resx">
       <DependentUpon>202107221837240_Patient-Appointment_Feature.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107221840151_Booking-Appointment_Feature.resx">
-      <DependentUpon>202107221840151_Booking-Appointment_Feature.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107221911137_Patient-Booking-Relationship-Appointment_Feature.resx">
-      <DependentUpon>202107221911137_Patient-Booking-Relationship-Appointment_Feature.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107221926173_Specialist-Booking-Relationship-Appointment_Feature.resx">
-      <DependentUpon>202107221926173_Specialist-Booking-Relationship-Appointment_Feature.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107222051281_changebridge.resx">
       <DependentUpon>202107222051281_changebridge.cs</DependentUpon>
     </EmbeddedResource>
@@ -382,8 +387,14 @@
     <EmbeddedResource Include="Migrations\202107280011418_addeddtos.resx">
       <DependentUpon>202107280011418_addeddtos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107282031239_somependingchange.resx">
-      <DependentUpon>202107282031239_somependingchange.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107310328492_Drop-Booking-table.resx">
+      <DependentUpon>202107310328492_Drop-Booking-table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107310330205_Booking-Appointment_Feature.resx">
+      <DependentUpon>202107310330205_Booking-Appointment_Feature.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107310331097_Relationship-Appointment_Feature.resx">
+      <DependentUpon>202107310331097_Relationship-Appointment_Feature.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

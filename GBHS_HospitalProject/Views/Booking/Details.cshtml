@@ -1,0 +1,42 @@
+﻿@model GBHS_HospitalProject.Models.BookingDto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingStartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookingStartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingEndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookingEndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingReasonToVisit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookingReasonToVisit)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BookingID }) |
+    @Html.ActionLink("Back to List", "List")
+</p>

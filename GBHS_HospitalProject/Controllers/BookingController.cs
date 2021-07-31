@@ -10,24 +10,22 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using GBHS_HospitalProject.Models;
-using GBHS_HospitalProject.Models.ViewModels;
 
 namespace GBHS_HospitalProject.Controllers
 {
-    public class PatientController : Controller
+    public class BookingController : Controller
     {
         private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
-        ApplicationDbContext db = new ApplicationDbContext();
-        
-        static PatientController()
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        static BookingController()
         {
             HttpClientHandler handler = new HttpClientHandler()
             {
                 AllowAutoRedirect = false,
                 UseCookies = false
             };
-
             client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44389/api/");
         }
@@ -48,70 +46,58 @@ namespace GBHS_HospitalProject.Controllers
             return;
         }
 
-        // GET: Patient
-        [Authorize(Roles ="Admin")]
+        // GET: Booking
+        [Authorize(Roles = "Admin,Guest")]
         public ActionResult List()
         {
             GetApplicationCookie();
+            string url = "bookingdata/listbookings";
+            HttpResponseMessage response = client.GetAsync(url).Result;
 
-            string Url = "PatientData/listPatients";
-            HttpResponseMessage Response = client.GetAsync(Url).Result;
-
-            IEnumerable<PatientDto> BookingDtos = Response.Content.ReadAsAsync<IEnumerable<PatientDto>>().Result;
-            return View(BookingDtos);
+            IEnumerable<BookingDto> bookingDtos = response.Content.ReadAsAsync<IEnumerable<BookingDto>>().Result;
+            return View(bookingDtos);
         }
 
-        // GET: Patient/Details/5
-        [Authorize]
+        [Authorize(Roles = "Admin,Guest")]
+        // GET: Booking/Details/5
         public ActionResult Details(int? id)
         {
-            DetailsPatient ViewModel = new DetailsPatient();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            string url = "PatientData/FindPatientById/" + id;
+            string url = "bookingdata/findbookingbyid/" + id;
+
             HttpResponseMessage response = client.GetAsync(url).Result;
-            PatientDto selectedPatientDto = response.Content.ReadAsAsync<PatientDto>().Result;
-            ViewModel.SelectedPatient = selectedPatientDto;
-
-            url = "BookingData/FindBookingsByPatientId/" + id;
-            response = client.GetAsync(url).Result;
-            IEnumerable<BookingDto> patientBookingDtos = response.Content.ReadAsAsync<IEnumerable<BookingDto>>().Result;
-
-            ViewModel.BookingsOfPatient = patientBookingDtos;
-            
-            return View(ViewModel);
+            BookingDto selectedBooking = response.Content.ReadAsAsync<BookingDto>().Result;
+            //Booking booking = db.Bookings.Find(id);
+            if (selectedBooking == null)
+            {
+                return HttpNotFound();
+            }
+            return View(selectedBooking);
         }
 
-        public ActionResult Error()
-        {
-            return View();
-        }
-
-        // GET: Patient/Create
-        [Authorize]
+        // GET: Booking/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Patient/Create
+        // POST: Booking/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PatientID,PatientFirstName,PatientLastName,PatientEmail,PatientPhoneNumber,PatientGender")] Patient patient)
+        public ActionResult Create([Bind(Include = "BookingID,BookingStartTime,BookingEndTime,BookingReasonToVist")] Booking booking)
         {
             if (ModelState.IsValid)
             {
-                string url = "PatientData/AddPatient";
-                string jsonpayload = jss.Serialize(patient);
+                string url = "bookingdata/addBooking";
+                string jsonpayload = jss.Serialize(booking);
 
                 HttpContent content = new StringContent(jsonpayload);
                 content.Headers.ContentType.MediaType = "application/json";
-
                 HttpResponseMessage response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -121,51 +107,48 @@ namespace GBHS_HospitalProject.Controllers
                 {
                     return RedirectToAction("Error");
                 }
-                
             }
 
             return RedirectToAction("List");
-            //return View(patient);
         }
 
-        // GET: Patient/Edit/5
-        [Authorize]
+        // GET: Booking/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            string url = "patientdata/FindPatientById/" + id;
+            string url = "bookingdata/findbookingbyid/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            PatientDto SelectedPatientDto = response.Content.ReadAsAsync<PatientDto>().Result;
-
-            if (SelectedPatientDto == null)
+            BookingDto selectedBooking = response.Content.ReadAsAsync<BookingDto>().Result;
+            //Booking booking = db.Bookings.Find(id);
+            if (selectedBooking == null)
             {
                 return HttpNotFound();
             }
-            return View(SelectedPatientDto);
+            return View(selectedBooking);
         }
 
-        // POST: Patient/Edit/5
+        // POST: Booking/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PatientID,PatientFirstName,PatientLastName,PatientEmail,PatientPhoneNumber,PatientGender")] Patient patient)
+        public ActionResult Edit([Bind(Include = "BookingID,BookingStartTime,BookingEndTime,BookingReasonToVist")] Booking booking)
         {
             if (ModelState.IsValid)
             {
-                string url = "patientdata/updatepatient/" + patient.PatientID;
-                string jsspayload = jss.Serialize(patient);
-                HttpContent content = new StringContent(jsspayload);
-
+                string url = "bookingdata/updatebooking/" + booking.BookingID;
+                string jsonpayload = jss.Serialize(booking);
+                HttpContent content = new StringContent(jsonpayload);
                 content.Headers.ContentType.MediaType = "application/json";
-                HttpResponseMessage response =  client.PostAsync(url, content).Result;
-                if(response.IsSuccessStatusCode)
+
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+                if (response.IsSuccessStatusCode)
                 {
+                    db.Entry(booking).State = EntityState.Modified;
+                    db.SaveChanges();
                     return RedirectToAction("List");
                 }
                 else
@@ -173,43 +156,38 @@ namespace GBHS_HospitalProject.Controllers
                     return RedirectToAction("Error");
                 }
 
-                /*db.Entry(patient).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("List");*/
             }
             else
             {
                 return RedirectToAction("Error");
             }
-            
         }
 
-        // GET: Patient/Delete/5
-        [Authorize(Roles ="Admin")]
+        // GET: Booking/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            string url = "patientdata/findpatientbyid/" + id;
+            string url = "bookingdata/findbookingbyid/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            PatientDto selectedPatient = response.Content.ReadAsAsync<PatientDto>().Result;
-            //Patient patient = db.Patients.Find(id);
-            if (selectedPatient == null)
+            BookingDto selectedBookingDto = response.Content.ReadAsAsync<BookingDto>().Result;
+            //Booking booking = db.Bookings.Find(id);
+            if (selectedBookingDto == null)
             {
                 return HttpNotFound();
             }
-            return View(selectedPatient);
+            return View(selectedBookingDto);
         }
 
-        // POST: Patient/Delete/5
+        // POST: Booking/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles ="Admin")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            string url = "patientdata/deletepatient/" + id;
+            string url = "bookingdata/deletebooking/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
@@ -221,11 +199,10 @@ namespace GBHS_HospitalProject.Controllers
             {
                 return RedirectToAction("Error");
             }
-            /*Patient patient = db.Patients.Find(id);
-            db.Patients.Remove(patient);
+            Booking booking = db.Bookings.Find(id);
+            db.Bookings.Remove(booking);
             db.SaveChanges();
-            return RedirectToAction("Index");
-            */
+
         }
 
         protected override void Dispose(bool disposing)

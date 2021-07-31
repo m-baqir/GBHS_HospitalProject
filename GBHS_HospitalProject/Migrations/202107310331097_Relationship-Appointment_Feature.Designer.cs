@@ -6,14 +6,14 @@ namespace GBHS_HospitalProject.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class PatientBookingRelationshipAppointment_Feature : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class RelationshipAppointment_Feature : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PatientBookingRelationshipAppointment_Feature));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RelationshipAppointment_Feature));
         
         string IMigrationMetadata.Id
         {
-            get { return "202107221911137_Patient-Booking-Relationship-Appointment_Feature"; }
+            get { return "202107310331097_Relationship-Appointment_Feature"; }
         }
         
         string IMigrationMetadata.Source
