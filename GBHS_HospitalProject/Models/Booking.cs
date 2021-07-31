@@ -28,6 +28,10 @@ namespace GBHS_HospitalProject.Models
     //DTO class
     public class BookingDto
     {
+        public BookingDto()
+        {
+
+        }
         public BookingDto(int bookingID, DateTime bookingStartTime, DateTime bookingEndTime, string bookingReasonToVisit, int patientID, string patientFirstName, string patientLastName, int specialistID, string specialistFirstName, string specialistLastName)
         {
             BookingID = bookingID;
@@ -40,6 +44,24 @@ namespace GBHS_HospitalProject.Models
             SpecialistID = specialistID;
             SpecialistFirstName = specialistFirstName;
             SpecialistLastName = specialistLastName;
+        }
+        public BookingDto(int bookingID, DateTime bookingStartTime, DateTime bookingEndTime, string bookingReasonToVisit, int specialistID, string specialistFirstName, string specialistLastName)
+        {
+            BookingID = bookingID;
+            BookingStartTime = bookingStartTime;
+            BookingEndTime = bookingEndTime;
+            BookingReasonToVisit = bookingReasonToVisit;
+            SpecialistID = specialistID;
+            SpecialistFirstName = specialistFirstName;
+            SpecialistLastName = specialistLastName;
+        }
+
+        public BookingDto(int bookingID, DateTime bookingStartTime, DateTime bookingEndTime, string bookingReasonToVisit)
+        {
+            BookingID = bookingID;
+            BookingStartTime = bookingStartTime;
+            BookingEndTime = bookingEndTime;
+            BookingReasonToVisit = bookingReasonToVisit;
         }
 
         public int BookingID { get; set; }

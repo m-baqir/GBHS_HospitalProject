@@ -33,10 +33,33 @@ namespace GBHS_HospitalProject.Controllers
         {
             List<Booking> Bookings = db.Bookings.ToList();
             List<BookingDto> BookingDtos = new List<BookingDto>();
-            Bookings.ForEach(b => BookingDtos.Add(
-                new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit,
-                b.Patient.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName,
-                b.Specialist.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName)));
+            Bookings.ForEach(b =>
+            {
+                if(b.Patient != null && b.Specialist != null)
+                {
+                    BookingDtos.Add(
+            new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit,
+            b.Patient.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName,
+            b.Specialist.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName));
+                }
+                else if(b.Patient == null && b.Specialist == null)
+                {
+                    if(b.Specialist != null)
+                    {
+                        BookingDtos.Add(new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit, b.Specialist.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName));
+                    }
+                    else
+                    {
+                        BookingDtos.Add(new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit));
+                    }
+                    
+                }
+                
+                
+            }
+            
+            
+        );
 
             return Ok(BookingDtos);
         }
@@ -55,7 +78,7 @@ namespace GBHS_HospitalProject.Controllers
         /// </example>
         [HttpGet]
         [ResponseType(typeof(Booking))]
-        public IHttpActionResult FindBookingById(string id)
+        public IHttpActionResult FindBookingById(int id)
         {
             Booking booking = db.Bookings.Find(id);
 
@@ -63,13 +86,36 @@ namespace GBHS_HospitalProject.Controllers
             {
                 return NotFound();
             }
-            BookingDto bookingDto = new BookingDto(
+            BookingDto bookingDto = null;
+            if(booking.Patient != null && booking.Specialist != null)
+            {
+                bookingDto = new BookingDto(
                 booking.BookingID, booking.BookingStartTime,
                 booking.BookingEndTime, booking.BookingReasonToVisit,
                 (int)booking.PatientID, booking.Patient.PatientFirstName,
                 booking.Patient.PatientLastName, (int)booking.SpecialistID,
                 booking.Specialist.SpecialistFirstName, booking.Specialist.SpecialistLastName
                 );
+            }
+            else if(booking.Patient == null)
+            {
+                if(booking.Specialist != null)
+                {
+                    bookingDto = new BookingDto(
+                booking.BookingID, booking.BookingStartTime,
+                booking.BookingEndTime, booking.BookingReasonToVisit,
+                 booking.Specialist.SpecialistID,
+                booking.Specialist.SpecialistFirstName, booking.Specialist.SpecialistLastName
+                );
+                }
+                else
+                {
+                    bookingDto = new BookingDto(
+                booking.BookingID, booking.BookingStartTime,
+                booking.BookingEndTime, booking.BookingReasonToVisit);
+                }
+            }
+            
             return Ok(bookingDto);
         }
 
@@ -123,14 +169,14 @@ namespace GBHS_HospitalProject.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(void))]
-        public IHttpActionResult UpdateBooking(string id, Booking booking)
+        public IHttpActionResult UpdateBooking(int id, Booking booking)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != booking.BookingID.ToString())
+            if (id != booking.BookingID)
             {
                 return BadRequest();
             }
@@ -186,7 +232,7 @@ namespace GBHS_HospitalProject.Controllers
             }
             catch (DbUpdateException)
             {
-                if (BookingExists(booking.BookingID.ToString()))
+                if (BookingExists(booking.BookingID))
                 {
                     return Conflict();
                 }
@@ -214,7 +260,7 @@ namespace GBHS_HospitalProject.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(Booking))]
-        public IHttpActionResult DeleteBooking(string id)
+        public IHttpActionResult DeleteBooking(int id)
         {
             Booking booking = db.Bookings.Find(id);
             if (booking == null)
@@ -237,9 +283,9 @@ namespace GBHS_HospitalProject.Controllers
             base.Dispose(disposing);
         }
 
-        private bool BookingExists(string id)
+        private bool BookingExists(int id)
         {
-            return db.Bookings.Count(e => e.BookingID.ToString() == id) > 0;
+            return db.Bookings.Count(e => e.BookingID == id) > 0;
         }
     }
 }
