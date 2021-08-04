@@ -11,6 +11,7 @@ namespace GBHS_HospitalProject.Models
   {
     [Key]
     public int SpecialistID { get; set;}
+
     public string SpecialistFirstName { get; set; }
     public string SpecialistLastName { get; set; }
         [ForeignKey("Departments")]

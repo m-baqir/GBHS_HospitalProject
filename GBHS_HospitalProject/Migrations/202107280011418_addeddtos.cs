@@ -7,6 +7,7 @@ namespace GBHS_HospitalProject.Migrations
     {
         public override void Up()
         {
+
         }
         
         public override void Down()

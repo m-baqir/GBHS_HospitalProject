@@ -7,13 +7,13 @@ namespace GBHS_HospitalProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class DropBookingtable : IMigrationMetadata
+    public sealed partial class AddDescriptiontoDepartmenttable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DropBookingtable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDescriptiontoDepartmenttable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202107310328492_Drop-Booking-table"; }
+            get { return "202108041652538_Add Description to Department table"; }
         }
         
         string IMigrationMetadata.Source

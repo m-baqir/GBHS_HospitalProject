@@ -31,7 +31,7 @@ namespace GBHS_HospitalProject.Controllers
     [ResponseType(typeof(Specialist))]
     public IEnumerable<SpecialistDto> ListSpecialists()
     {
-      List<Specialist> Specialists = db.Specialists.ToList();
+      List<Specialist> Specialists = db. Specialists.ToList();
       List<SpecialistDto> SpecialistDtos = new List<SpecialistDto>();
 
       Specialists.ForEach(s => SpecialistDtos.Add(new SpecialistDto()
