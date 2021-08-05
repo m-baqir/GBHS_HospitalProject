@@ -1,0 +1,57 @@
+﻿@model GBHS_HospitalProject.Models.ViewModels.SpecialistDetails
+@{
+  ViewBag.Title = "Create";
+}
+
+<h2>Create a new Department</h2>
+
+@using (Html.BeginForm())
+{
+  @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+  <h4>Booking</h4>
+  <hr />
+  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+  <div class="form-group">
+    @Html.LabelFor(model => model.SelectedSpecialist.SpecialistFirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.Editor("SpecialistFirstName", new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessage("SpecialistFirstName", "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.SelectedSpecialist.SpecialistLastName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      @Html.Editor("SpecialistLastName", new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessage("SpecialistLastName", "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.SelectedSpecialist.DepartmentName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+      <select name="DepartmentID" class="form-control">
+        <option selected>Select Department</option>
+        @foreach (var item in Model.RelatedDepartments)
+        {
+          <option value="@item.DepartmentID">@item.DepartmentName</option>
+
+        }
+      </select>
+    </div>
+    @Html.ValidationMessage("DepartmentID","", new { @class = "text-danger" })
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+      <input type="submit" value="Create" class="btn btn-default" />
+    </div>
+  </div>
+</div>
+}
+
+<div>
+  @Html.ActionLink("Back to List", "List")
+</div>

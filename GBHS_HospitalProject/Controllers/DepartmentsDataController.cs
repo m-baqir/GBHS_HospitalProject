@@ -35,7 +35,6 @@ namespace GBHS_HospitalProject.Controllers
       return db.Departments;
     }
 
-    // GET: api/DepartmentsData/Find/5
     /// <summary>
     /// Find a department with its ID
     /// </summary>
@@ -48,7 +47,7 @@ namespace GBHS_HospitalProject.Controllers
     /// CONTENT NOT FOUND
     /// </returns>
     /// <example>
-    /// GET: api/DepartmentsData/Find/2
+    /// GET: api/DepartmentsData/FindDepartments/1
     /// </example>
     [HttpGet]
     [ResponseType(typeof(Department))]

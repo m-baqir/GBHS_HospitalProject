@@ -27,7 +27,7 @@ namespace GBHS_HospitalProject.Controllers
     /// <example>
     /// // GET: api/SpecialistsData/ListSpecialists
     /// </example>
-    /// [HttpGet]
+    [HttpGet]
     [ResponseType(typeof(Specialist))]
     public IEnumerable<SpecialistDto> ListSpecialists()
     {

@@ -11,7 +11,7 @@ namespace GBHS_HospitalProject.Models
   {
     [Key]
     public int SpecialistID { get; set;}
-
+    
     public string SpecialistFirstName { get; set; }
     public string SpecialistLastName { get; set; }
         [ForeignKey("Departments")]
@@ -21,10 +21,15 @@ namespace GBHS_HospitalProject.Models
   }
   public class SpecialistDto
   {
+    [Display(Name = "ID")]
     public int SpecialistID { get; set; }
+    [Display(Name = "First Name")]
     public string SpecialistFirstName { get; set; }
+    [Display(Name = "Last Name")]
     public string SpecialistLastName { get; set; }
     public int DepartmentID { get; set; }
+    [Display(Name = "Department Name")]
     public string DepartmentName { get; set; }
+    public ICollection<Booking> SpecialistBookings { get; set; }
   }
 }

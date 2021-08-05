@@ -1,0 +1,65 @@
+﻿@model IEnumerable<GBHS_HospitalProject.Models.Department>
+@{
+  ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+  @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped">
+  <tr>
+    <th>
+      @Html.DisplayNameFor(model => model.DepartmentName)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.Description)
+    </th>
+    <th>
+      Actions
+    </th>
+    @*@if (User.IsInRole("Admin"))
+    {
+      <th>@Html.DisplayNameFor(model => model.PatientFirstName)</th>
+      <th>@Html.DisplayNameFor(model => model.PatientLastName)</th>
+    }
+    <th>@Html.DisplayNameFor(model => model.SpecialistFirstName)</th>
+    <th>@Html.DisplayNameFor(model => model.SpecialistLastName)</th>*@
+  </tr>
+
+  @foreach (var item in Model)
+  {
+<tr>
+  <td>
+    @Html.DisplayFor(modelItem => item.DepartmentName)
+  </td>
+  <td>
+    @Html.DisplayFor(modelItem => item.Description)
+  </td>
+  @*@if (User.IsInRole("Admin"))
+    {
+      <td>
+        @Html.DisplayFor(modelItem => item.PatientFirstName)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.PatientLastName)
+      </td>
+    }*@
+
+  @*<td>
+      @Html.DisplayFor(modelItem => item.SpecialistFirstName)
+    </td>
+    <td>
+      @Html.DisplayFor(modelItem => item.SpecialistLastName)
+    </td>*@
+  <td>
+    @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
+    @Html.ActionLink("Details", "Details", new { id = item.DepartmentID }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
+  </td>
+</tr>
+  }
+
+</table>
+
