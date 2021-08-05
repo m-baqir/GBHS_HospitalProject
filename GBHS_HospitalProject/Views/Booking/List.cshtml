@@ -20,26 +20,48 @@
         <th>
             @Html.DisplayNameFor(model => model.BookingReasonToVisit)
         </th>
-        <th></th>
+        @if (User.IsInRole("Admin"))
+        {
+    <th>@Html.DisplayNameFor(model => model.PatientFirstName)</th>
+    <th>@Html.DisplayNameFor(model => model.PatientLastName)</th>
+        }
+        <th>@Html.DisplayNameFor(model => model.SpecialistFirstName)</th>
+        <th>@Html.DisplayNameFor(model => model.SpecialistLastName)</th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.BookingStartTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.BookingEndTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.BookingReasonToVisit)
+    </td>
+    @if (User.IsInRole("Admin"))
+    {
         <td>
-            @Html.DisplayFor(modelItem => item.BookingStartTime)
+            @Html.DisplayFor(modelItem => item.PatientFirstName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BookingEndTime)
+            @Html.DisplayFor(modelItem => item.PatientLastName)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookingReasonToVisit)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookingID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookingID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookingID })
-        </td>
-    </tr>
+    }
+    
+    <td>
+        @Html.DisplayFor(modelItem => item.SpecialistFirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SpecialistLastName)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.BookingID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.BookingID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.BookingID })
+    </td>
+</tr>
 }
 
 </table>

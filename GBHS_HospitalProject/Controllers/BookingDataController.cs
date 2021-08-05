@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using GBHS_HospitalProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GBHS_HospitalProject.Controllers
 {
@@ -31,7 +32,17 @@ namespace GBHS_HospitalProject.Controllers
         [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListBookings()
         {
-            List<Booking> Bookings = db.Bookings.ToList();
+            List<Booking> Bookings = new List<Booking>();
+            if (User.IsInRole("Admin"))
+            {
+                Bookings = db.Bookings.ToList();
+            }
+            else if(User.IsInRole("Guest"))
+            {
+                string userId = User.Identity.GetUserId();
+                Bookings = db.Bookings.Where(b => b.UserID == userId).ToList();
+            }
+            
             List<BookingDto> BookingDtos = new List<BookingDto>();
             Bookings.ForEach(b =>
             {
@@ -223,7 +234,7 @@ namespace GBHS_HospitalProject.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            booking.UserID = User.Identity.GetUserId();
             db.Bookings.Add(booking);
             db.SaveChanges();
             try

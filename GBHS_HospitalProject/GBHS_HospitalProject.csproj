@@ -244,6 +244,10 @@
     <Compile Include="Migrations\202108041652538_Add Description to Department table.Designer.cs">
       <DependentUpon>202108041652538_Add Description to Department table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108050219389_UserID-FK-Booking.cs" />
+    <Compile Include="Migrations\202108050219389_UserID-FK-Booking.Designer.cs">
+      <DependentUpon>202108050219389_UserID-FK-Booking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -399,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108041652538_Add Description to Department table.resx">
       <DependentUpon>202108041652538_Add Description to Department table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108050219389_UserID-FK-Booking.resx">
+      <DependentUpon>202108050219389_UserID-FK-Booking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
