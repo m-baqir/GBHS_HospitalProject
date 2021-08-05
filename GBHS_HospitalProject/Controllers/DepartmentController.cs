@@ -83,44 +83,63 @@ namespace GBHS_HospitalProject.Controllers
     // GET: Department/Edit/5
     public ActionResult Edit(int id)
     {
-      return View();
+      string url = "departmentsdata/finddepartment/" + id;
+      HttpResponseMessage response = client.GetAsync(url).Result;
+      Department SelectedDepartment = response.Content.ReadAsAsync<Department>().Result;
+
+
+
+      return View(SelectedDepartment);
     }
 
     // POST: Department/Edit/5
     [HttpPost]
-    public ActionResult Edit(int id, FormCollection collection)
+    public ActionResult Edit(int id, Department department)
     {
-      try
-      {
-        // TODO: Add update logic here
+      string url = "departmentsdata/updatedepartment/" + id;
+      string jsonpayload = jss.Serialize(department);
 
-        return RedirectToAction("Index");
-      }
-      catch
+      HttpContent content = new StringContent(jsonpayload);
+
+      content.Headers.ContentType.MediaType = "application/json";
+      HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+      if (response.IsSuccessStatusCode)
       {
-        return View();
+        return RedirectToAction("List");
+      }
+      else
+      {
+        return RedirectToAction("Error");
       }
     }
 
     // GET: Department/Delete/5
     public ActionResult Delete(int id)
     {
-      return View();
+      string url = "departmentsdata/finddepartment/" + id;
+      HttpResponseMessage response = client.GetAsync(url).Result;
+      Department SelectedDepartment = response.Content.ReadAsAsync<Department>().Result;
+      return View(SelectedDepartment);
     }
 
     // POST: Department/Delete/5
     [HttpPost]
-    public ActionResult Delete(int id, FormCollection collection)
+    public ActionResult Delete(int id, Department department)
     {
-      try
-      {
-        // TODO: Add delete logic here
+      string url = "departmentsdata/deletedepartment/" + id;
+      string jsonpayload = jss.Serialize(department);
+      HttpContent content = new StringContent(jsonpayload);
+      content.Headers.ContentType.MediaType = "application/json";
+      HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-        return RedirectToAction("Index");
-      }
-      catch
+      if (response.IsSuccessStatusCode)
       {
-        return View();
+        return RedirectToAction("List");
+      }
+      else
+      {
+        return RedirectToAction("Error");
       }
     }
   }

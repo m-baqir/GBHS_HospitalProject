@@ -1,11 +1,14 @@
 ﻿@model GBHS_HospitalProject.Models.Department
+
 @{
-  ViewBag.Title = "Details";
+  ViewBag.Title = "Delete";
 }
 
-<h2>Details of Department</h2>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
 <div>
-  <h4>Department</h4>
+  <h4>Booking</h4>
   <hr />
   <dl class="dl-horizontal">
     <dt>
@@ -24,11 +27,15 @@
       @Html.DisplayFor(model => model.Description)
     </dd>
 
-
-
   </dl>
+
+  @using (Html.BeginForm())
+  {
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+      <input type="submit" value="Delete" class="btn btn-link" /> |
+      @Html.ActionLink("Cancel", "List")
+    </div>
+  }
 </div>
-<p class="float-right">
-  @Html.ActionLink("Edit", "Edit", new { id = Model.DepartmentID }) |
-  @Html.ActionLink("Back to List", "List")
-</p>

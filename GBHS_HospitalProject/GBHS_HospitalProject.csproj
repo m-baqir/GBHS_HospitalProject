@@ -251,6 +251,14 @@
     <Compile Include="Migrations\202108050219389_UserID-FK-Booking.Designer.cs">
       <DependentUpon>202108050219389_UserID-FK-Booking.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108051944566_Changing.cs" />
+    <Compile Include="Migrations\202108051944566_Changing.Designer.cs">
+      <DependentUpon>202108051944566_Changing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108052012264_changing datatype.cs" />
+    <Compile Include="Migrations\202108052012264_changing datatype.Designer.cs">
+      <DependentUpon>202108052012264_changing datatype.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -357,6 +365,10 @@
     <Content Include="Views\Specialist\Details.cshtml" />
     <Content Include="Views\Department\Create.cshtml" />
     <Content Include="Views\Specialist\Create.cshtml" />
+    <Content Include="Views\Specialist\Delete.cshtml" />
+    <Content Include="Views\Department\Delete.cshtml" />
+    <Content Include="Views\Specialist\Edit.cshtml" />
+    <Content Include="Views\Department\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -417,6 +429,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108050219389_UserID-FK-Booking.resx">
       <DependentUpon>202108050219389_UserID-FK-Booking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108051944566_Changing.resx">
+      <DependentUpon>202108051944566_Changing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108052012264_changing datatype.resx">
+      <DependentUpon>202108052012264_changing datatype.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
