@@ -16,11 +16,11 @@ namespace GBHS_HospitalProject.Models
         public string BookingReasonToVisit { get; set; }
 
         [ForeignKey("Patient")]
-        public int? PatientID;
+        public int? PatientID { get; set; }
         public virtual Patient Patient { get; set; }
 
         [ForeignKey("Specialist")]
-        public int? SpecialistID;
+        public int? SpecialistID { get; set; }
         public virtual Specialist Specialist { get; set; }
 
         [ForeignKey("ApplicationUser")]

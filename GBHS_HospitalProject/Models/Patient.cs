@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -16,8 +17,11 @@ namespace GBHS_HospitalProject.Models
         public string PatientPhoneNumber { get; set; }
         public string PatientGender { get; set; }
 
-        ICollection<Booking> PatientBookings { get; set; }
+        public ICollection<Booking> PatientBookings { get; set; }
 
+        [ForeignKey("ApplicationUser")]
+        public string UserID { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
     //DTO

@@ -9,6 +9,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using GBHS_HospitalProject.Models;
+using Microsoft.AspNet.Identity;
+using System.Diagnostics;
+
 
 namespace GBHS_HospitalProject.Controllers
 {
@@ -56,6 +59,39 @@ namespace GBHS_HospitalProject.Controllers
         public IHttpActionResult FindPatientById(int id)
         {
             Patient Patient = db.Patients.Find(id);
+            if (Patient == null)
+            {
+                return NotFound();
+            }
+            PatientDto PatientDto = new PatientDto(
+                Patient.PatientID, Patient.PatientFirstName,
+                Patient.PatientLastName, Patient.PatientPhoneNumber,
+                Patient.PatientEmail, Patient.PatientGender
+                );
+
+            return Ok(PatientDto);
+        }
+
+        /// <summary>
+        /// Find a patient by patient id.
+        /// </summary>
+        /// <param name="id">Represents the patient id primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: A patient in the system matching up to the patient id primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// GET: api/PatientData/FindPatientById/5
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(PatientDto))]
+        [Authorize(Roles = "Admin,Guest")]
+        public IHttpActionResult FindPatientByUserId()
+        {
+            string id = User.Identity.GetUserId();
+            Patient Patient = db.Patients.Where(p=> p.UserID == id).FirstOrDefault();
             if (Patient == null)
             {
                 return NotFound();
@@ -136,16 +172,23 @@ namespace GBHS_HospitalProject.Controllers
         /// FORM DATA: Patient JSON object.
         /// </example>
         [HttpPost]
+        [Authorize(Roles="Admin,Guest")]
         [ResponseType(typeof(Patient))]
-
         public IHttpActionResult AddPatient(Patient Patient)
         {
             //TODO: for guest, if
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            //registered user is not admin.
+            Debug.WriteLine("PatientDataController User.Identity.GetUserId() :" + User.Identity.GetUserId());
+            if (User != null && !User.IsInRole("Admin"))
+            {
+                Patient.UserID = User.Identity.GetUserId();
+            }
+            Patient.PatientBookings = new List<Booking>();
             db.Patients.Add(Patient);
             db.SaveChanges();
 

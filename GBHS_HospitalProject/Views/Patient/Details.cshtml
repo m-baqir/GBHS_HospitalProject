@@ -51,8 +51,61 @@
         </dd>
 
     </dl>
+    <div>
+        appointments
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <strong>ID</strong>
+            </div>
+            <div class="col-sm-2">
+                <strong>Start time</strong>
+            </div>
+            <div class="col-sm-2">
+                <strong>End time</strong>
+            </div>
+            <div class="col-sm-2">
+                <strong>Specialist</strong>
+            </div>
+        </div>
+        @foreach(var item in Model.BookingsOfPatient)
+            {
+    <div class="row">
+        <div class="col-sm-2">
+            @item.BookingID.ToString()
+        </div>
+        <div class="col-sm-2">
+            @item.BookingStartTime.ToString()
+            </div>
+            <div class="col-sm-2">
+            @item.BookingEndTime.ToString()
+        </div>
+
+        <div class="col-sm-2">
+            @if (item.SpecialistFirstName != null)
+            {
+                @item.SpecialistFirstName
+            }
+            @if (item.SpecialistLastName != null)
+            {
+                @item.SpecialistLastName
+            }
+
+        </div>
+    </div>
+            }
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.SelectedPatient.PatientID }) |
-    @Html.ActionLink("Back to List", "List")
+    @if (User != null && User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Back to List", "List")
+    }
+            else
+            {
+                @Html.ActionLink("Go to Booking List","../Booking/List")
+            }
+
 </p>

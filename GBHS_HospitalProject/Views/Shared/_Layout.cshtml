@@ -21,9 +21,30 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User != null)
+                    {
+                        //TODO:Admin can see the list of patients, appointments
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Appointments", "List", "Booking")</li>
+                            <li>@Html.ActionLink("Patients", "List", "Patient")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Appointments", "List", "Booking")</li>
+                            <li>@Html.ActionLink("Patient Information", "Details", "Patient")</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Book an appointment", "Book", "Booking")</li>
+                        
+                    }
+
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

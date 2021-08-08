@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using GBHS_HospitalProject.Models;
 using GBHS_HospitalProject.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace GBHS_HospitalProject.Controllers
 {
@@ -62,26 +63,48 @@ namespace GBHS_HospitalProject.Controllers
         }
 
         // GET: Patient/Details/5
-        [Authorize]
+        [Authorize(Roles ="Admin,Guest")]
         public ActionResult Details(int? id)
         {
+            GetApplicationCookie();
             DetailsPatient ViewModel = new DetailsPatient();
+            string url;
+            HttpResponseMessage response;
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if(User!=null && User.IsInRole("Guest"))
+                {
+                    url = "PatientData/FindPatientByUserId";
+                    response = client.GetAsync(url).Result;
+                    PatientDto patientDto = response.Content.ReadAsAsync<PatientDto>().Result;
+                    if(patientDto == null)
+                    {
+                        return RedirectToAction("Create");
+                    }
+                    ViewModel.SelectedPatient = patientDto;
+                    id = patientDto.PatientID;
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                
             }
-            string url = "PatientData/FindPatientById/" + id;
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            PatientDto selectedPatientDto = response.Content.ReadAsAsync<PatientDto>().Result;
-            ViewModel.SelectedPatient = selectedPatientDto;
-
+            else
+            {
+                url = "PatientData/FindPatientById/" + id;
+                response = client.GetAsync(url).Result;
+                PatientDto selectedPatientDto = response.Content.ReadAsAsync<PatientDto>().Result;
+                ViewModel.SelectedPatient = selectedPatientDto;
+            }
             url = "BookingData/FindBookingsByPatientId/" + id;
             response = client.GetAsync(url).Result;
             IEnumerable<BookingDto> patientBookingDtos = response.Content.ReadAsAsync<IEnumerable<BookingDto>>().Result;
 
             ViewModel.BookingsOfPatient = patientBookingDtos;
-            
+
             return View(ViewModel);
+
         }
 
         public ActionResult Error()
@@ -100,10 +123,11 @@ namespace GBHS_HospitalProject.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles="Admin,Guest")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PatientID,PatientFirstName,PatientLastName,PatientEmail,PatientPhoneNumber,PatientGender")] Patient patient)
         {
+            GetApplicationCookie();
             if (ModelState.IsValid)
             {
                 string url = "PatientData/AddPatient";
@@ -111,11 +135,19 @@ namespace GBHS_HospitalProject.Controllers
 
                 HttpContent content = new StringContent(jsonpayload);
                 content.Headers.ContentType.MediaType = "application/json";
-
+                Debug.WriteLine("PatientController User.Identity.GetUserId() :" + User.Identity.GetUserId());
                 HttpResponseMessage response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("List");
+                    if (User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("List");
+                    }
+                    else if(User.IsInRole("Guest"))
+                    {
+                        return RedirectToAction("Details");
+                    }
+                    
                 }
                 else
                 {

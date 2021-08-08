@@ -32,15 +32,15 @@ namespace GBHS_HospitalProject.Controllers
         [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListBookings()
         {
-            List<Booking> Bookings = new List<Booking>();
+            List<Booking> Bookings;
             if (User.IsInRole("Admin"))
             {
                 Bookings = db.Bookings.ToList();
             }
-            else if(User.IsInRole("Guest"))
+            else
             {
                 string userId = User.Identity.GetUserId();
-                Bookings = db.Bookings.Where(b => b.UserID == userId).ToList();
+                Bookings = db.Bookings.Where(b => b.UserID == userId || b.PatientID == null).ToList();
             }
             
             List<BookingDto> BookingDtos = new List<BookingDto>();
@@ -153,11 +153,31 @@ namespace GBHS_HospitalProject.Controllers
             {
                 return NotFound();
             }
-            bookings.ForEach(b => bookingDtos.Add(new BookingDto(
+            bookings.ForEach(b =>
+            {
+                if(b.SpecialistID != null)
+                {
+                    bookingDtos.Add(new BookingDto(
                 b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit,
                 (int)b.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName,
                 (int)b.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName
-                )));
+                ));
+                }
+                else
+                {
+                    BookingDto newBookingDto = new BookingDto();
+                    newBookingDto.BookingID = b.BookingID;
+                    newBookingDto.BookingStartTime = b.BookingStartTime;
+                    newBookingDto.BookingEndTime = b.BookingEndTime;
+                    newBookingDto.BookingReasonToVisit = b.BookingReasonToVisit;
+                    newBookingDto.PatientID = (int)b.PatientID;
+                    newBookingDto.PatientFirstName = b.Patient.PatientFirstName;
+                    newBookingDto.PatientLastName = b.Patient.PatientLastName;
+                    bookingDtos.Add(newBookingDto);
+                }
+                
+            }
+            );
 
             return Ok(bookingDtos);
         }
@@ -236,7 +256,7 @@ namespace GBHS_HospitalProject.Controllers
             }
             booking.UserID = User.Identity.GetUserId();
             db.Bookings.Add(booking);
-            db.SaveChanges();
+
             try
             {
                 db.SaveChanges();
@@ -283,6 +303,21 @@ namespace GBHS_HospitalProject.Controllers
             db.SaveChanges();
 
             return Ok(booking);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IHttpActionResult BookAppointmentForPatient(int id,Booking booking)
+        {
+            Patient patient = db.Patients.Find(booking.PatientID);
+            booking.Patient = patient;
+            if (patient.PatientBookings == null) patient.PatientBookings = new List<Booking>();
+            patient.PatientBookings.Add(booking);
+            return UpdateBooking(id, booking);
+            
         }
 
         protected override void Dispose(bool disposing)

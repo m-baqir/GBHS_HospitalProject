@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using GBHS_HospitalProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GBHS_HospitalProject.Controllers
 {
@@ -89,7 +90,7 @@ namespace GBHS_HospitalProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookingID,BookingStartTime,BookingEndTime,BookingReasonToVist")] Booking booking)
+        public ActionResult Create([Bind(Include = "BookingID,BookingStartTime,BookingEndTime,BookingReasonToVisit")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -147,8 +148,6 @@ namespace GBHS_HospitalProject.Controllers
                 HttpResponseMessage response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    db.Entry(booking).State = EntityState.Modified;
-                    db.SaveChanges();
                     return RedirectToAction("List");
                 }
                 else
@@ -199,10 +198,53 @@ namespace GBHS_HospitalProject.Controllers
             {
                 return RedirectToAction("Error");
             }
-            Booking booking = db.Bookings.Find(id);
-            db.Bookings.Remove(booking);
-            db.SaveChanges();
+            
 
+        }
+
+        public ActionResult Book(int? id)
+        {
+            //TODO
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            string url = "bookingdata/findbookingbyid/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            BookingDto selectedBooking = response.Content.ReadAsAsync<BookingDto>().Result;
+            //Booking booking = db.Bookings.Find(id);
+            if (selectedBooking == null) 
+            {
+                return HttpNotFound();
+            }
+            return View(selectedBooking);
+        }
+
+        [HttpPost]
+        public ActionResult Book([Bind(Include = "BookingID,BookingID,BookingStartTime,BookingEndTime,BookingReasonToVisit")] Booking booking)
+        {
+            string url;
+            HttpResponseMessage response;
+            int patientId = 0;
+            if (User != null && User.IsInRole("Guest"))
+            {
+                url = "patientData/FindPatientByUserId";
+                response = client.GetAsync(url).Result;
+                PatientDto patientDto = response.Content.ReadAsAsync<PatientDto>().Result;
+                patientId = patientDto.PatientID;
+                booking.UserID = User.Identity.GetUserId();
+                booking.PatientID = patientId;
+            }
+
+            url = "bookingData/bookappointmentforpatient/" + booking.BookingID;
+            
+            
+            string jsonPayload = jss.Serialize(booking);
+            HttpContent content = new StringContent(jsonPayload);
+            content.Headers.ContentType.MediaType = "application/json";
+
+            response = client.PostAsync(url, content).Result;
+            return RedirectToAction("List");
         }
 
         protected override void Dispose(bool disposing)
