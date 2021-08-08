@@ -9,6 +9,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using GBHS_HospitalProject.Models;
+using System.Diagnostics;
+using System.Web;
+using System.IO;
 
 namespace GBHS_HospitalProject.Controllers
 {
@@ -191,6 +194,9 @@ namespace GBHS_HospitalProject.Controllers
             }
 
             db.Entry(service).State = EntityState.Modified;
+            // Picture update is handled by another method
+            db.Entry(service).Property(a => a.ServiceHasPic).IsModified = false;
+            db.Entry(service).Property(a => a.PicExtension).IsModified = false;
 
             try
             {
@@ -209,6 +215,78 @@ namespace GBHS_HospitalProject.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        public IHttpActionResult UploadServicePic(int id)
+        {
+
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                Debug.WriteLine("Received multipart form data.");
+
+                int numfiles = HttpContext.Current.Request.Files.Count;
+                Debug.WriteLine("Files Received: " + numfiles);
+
+                //Check if a file is posted
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var servicePic = HttpContext.Current.Request.Files[0];
+                    //Check if the file is empty
+                    if (servicePic.ContentLength > 0)
+                    {
+                        //establish valid file types (can be changed to other file extensions if desired!)
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(servicePic.FileName).Substring(1);
+                        //Check the extension of the file
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                //file name is the id of the image
+                                string fn = id + "." + extension;
+
+                                //get a direct file path to ~/Content/images/service/{id}.{extension}
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Services/"), fn);
+
+                                //save the file
+                                servicePic.SaveAs(path);
+
+                                //if these are all successful then we can set these fields
+                                haspic = true;
+                                picextension = extension;
+
+                                //Update the service haspic and picextension fields in the database
+                                Service Selectedservice = db.Services.Find(id);
+                                Selectedservice.ServiceHasPic = haspic;
+                                Selectedservice.PicExtension = extension;
+                                db.Entry(Selectedservice).State = EntityState.Modified;
+
+                                db.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine("service Image was not saved successfully.");
+                                Debug.WriteLine("Exception:" + ex);
+                                return BadRequest();
+                            }
+                        }
+                    }
+
+                }
+
+                return Ok();
+            }
+            else
+            {
+                //not multipart form data
+                return BadRequest();
+
+            }
+
         }
         /// <summary>
         /// creates a new service in the db

@@ -14,17 +14,28 @@
 <p>@Model.SelectedService.ServiceEmail</p>
 <p>@Model.SelectedService.ServiceLocation</p>
 <p>@Model.SelectedService.ServiceInfo</p>
-<div>
-    <h2>Locations with @Model.SelectedService.ServiceName:</h2>
-    @foreach(var location in Model.LocationsWithService)
-    {
-        <a href="/location/details/@location.LocationID">@location.LocationName</a>
+
+<div class="col-md-6 col-sm-12">
+    @{
+        string imageurl = "/Content/Images/Services/default.png";
+        if (Model.SelectedService.ServiceHasPic)
+        {
+            imageurl = "/Content/Images/Services/" + Model.SelectedService.ServiceID + "." + Model.SelectedService.PicExtension;
+        }
     }
+    <div><img style="display:block; max-width:100%;" alt="@Model.SelectedService.ServiceName" src="@imageurl" /></div>
 </div>
-<div>
-    <h2>Locations without @Model.SelectedService.ServiceName:</h2>
-    @foreach (var location in Model.LocationsWithoutService)
-    {
-        <a href="/location/details/@location.LocationID">@location.LocationName</a>
-    }
-</div>
+    <div>
+        <h2>Locations with @Model.SelectedService.ServiceName:</h2>
+        @foreach (var location in Model.LocationsWithService)
+        {
+            <a href="/location/details/@location.LocationID">@location.LocationName</a>
+        }
+    </div>
+    <div>
+        <h2>Locations without @Model.SelectedService.ServiceName:</h2>
+        @foreach (var location in Model.LocationsWithoutService)
+        {
+            <a href="/location/details/@location.LocationID">@location.LocationName</a>
+        }
+    </div>
