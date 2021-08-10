@@ -33,7 +33,7 @@
     @Html.LabelFor(model => model.SelectedSpecialist.DepartmentName, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
       <select name="DepartmentID" class="form-control">
-        <option selected>Select Department</option>
+        <option value="" disabled selected>Select Department</option>
         @foreach (var item in Model.RelatedDepartments)
         {
           <option value="@item.DepartmentID">@item.DepartmentName</option>

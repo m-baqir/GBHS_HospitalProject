@@ -89,19 +89,24 @@ namespace GBHS_HospitalProject.Controllers
     // GET: Specialist/Edit/5
     public ActionResult Edit(int id)
     {
+      SpecialistDetails ViewModel = new SpecialistDetails();
 
       string url = "specialistsdata/findspecialist/" + id;
       HttpResponseMessage response = client.GetAsync(url).Result;
       SpecialistDto SelectedSpecialist = response.Content.ReadAsAsync<SpecialistDto>().Result;
-      
+      ViewModel.SelectedSpecialist = SelectedSpecialist;
 
+      url = "departmentsdata/listdepartments";
+      response = client.GetAsync(url).Result;
+      IEnumerable<Department> DepartmentOptions = response.Content.ReadAsAsync<IEnumerable<Department>>().Result;
+      ViewModel.RelatedDepartments = DepartmentOptions;
 
-      return View(SelectedSpecialist);
+      return View(ViewModel);
     }
 
-    // POST: Specialist/Update/5
+    // POST: Specialist/Edit/5
     [HttpPost]
-    public ActionResult Update(int id, Specialist specialist)
+    public ActionResult Edit(int id, Specialist specialist)
     {
       string url = "specialistsdata/updatespecialist/" + id;
       string jsonpayload = jss.Serialize(specialist);

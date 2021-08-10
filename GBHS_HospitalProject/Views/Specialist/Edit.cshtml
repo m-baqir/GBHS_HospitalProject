@@ -1,5 +1,5 @@
 ﻿
-@model GBHS_HospitalProject.Models.SpecialistDto
+@model GBHS_HospitalProject.Models.ViewModels.SpecialistDetails
 
 @{
   ViewBag.Title = "Edit";
@@ -11,80 +11,40 @@
 {
   @Html.AntiForgeryToken()
 
-  <div class="form-horizontal">
-    <h4>Edit Department</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.SpecialistID)
+<div class="form-horizontal">
+  <h4>Edit Department</h4>
+  <hr />
+  <div style="display:none;">
+    @* Pass through the Item ID *@
+    <input type="text" name="SpecialistID" value="@Model.SelectedSpecialist.SpecialistID" />
+  </div>
 
-    <div class="form-group">
-      @Html.LabelFor(model => model.SpecialistFirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.SpecialistFirstName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.SpecialistFirstName, "", new { @class = "text-danger" })
-      </div>
-    </div>
 
-    <div class="form-group">
-      @Html.LabelFor(model => model.SpecialistLastName, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.SpecialistLastName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.SpecialistLastName, "", new { @class = "text-danger" })
-      </div>
-    </div>
+  <div>
+    <label class="control-label col-md-2">First Name:</label> <input type="text" name="SpecialistFirstName" value="@Model.SelectedSpecialist.SpecialistFirstName" class="form-control"/>
+  </div>
+  <div>
+    <label class="control-label col-md-2">Last Name:</label> <input type="text" name="SpecialistLastName" value="@Model.SelectedSpecialist.SpecialistLastName" class="form-control"/>
+  </div>
 
-    <div class="form-group">
-      @Html.LabelFor(model => model.DepartmentID, "Department Name", htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        <select class="form-control" data-val="true" data-val-required="Please choose a Department" id="DepartmentID" name="DepartmentID">
-          <option value=@Model.DepartmentID selected>@Model.DepartmentName</option>
-        </select>
-        @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
-      </div>
-    </div>
+  <label class="control-label col-md-2">Department Name:</label>
+  <select name="DepartmentID" id="@Model.SelectedSpecialist.DepartmentID" class="form-control">
+    @foreach (var department in Model.RelatedDepartments)
+    {
+      <option value="@department.DepartmentID">@department.DepartmentName</option>
 
-    <div class="form-group">
-      <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Save" class="btn btn-default" />
-      </div>
+    }
+  </select>
+
+  <div class="form-group">
+    <div class="control-label col-md-2">
+      <input type="submit" value="Save" class="btn btn-default" />
     </div>
   </div>
+</div>
 }
 
 <div>
   @Html.ActionLink("Back to List", "List")
 </div>
 
-@*<script type="text/javascript">
-          $(document).ready(function () {
-              var serviceURL = 'api/DepartmentsData/ListDepartments';
-              var baseApplicationPath = '@Url.Content("~/")';
-                  $.ajax({
-                      type: "GET",
-                      url: baseApplicationPath + serviceURL,
-                      data: param = "",
-                      contentType: "application/json; charset=utf-8",
-                      dataType: "json",
-                      success: successFunc,
-                      error: errorFunc
-                  });
-                  function successFunc(data, status) {
-                    // fetch the existing food type
-                    const selectedVal = $('#ChoosenDepartmentID').children('option:selected').val();
-                    //console.log(selectedVal)
-                    // clear all the options before repopulating them
-                    $('#ChoosenDepartmentID').find('option').remove();
-                    for (items of data) {
-                      let selected = "";
-                      if (selectedVal == items['DepartmentID']) {
-                        selected = "selected";
-                      }
-                      //console.log(items['TypeID'] + ' ' + items['TypeName']);
-                      $('#ChoosenDepartmentID').append(`<option value="${items['DepartmentID']}" ${selected}>${items['DepartmentName']}</option>`);
-                    }
-                  }
-                  function errorFunc() {
-                      alert('error');
-                  }
-              });
-  </script>*@
