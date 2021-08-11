@@ -90,7 +90,7 @@ namespace GBHS_HospitalProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookingID,BookingStartTime,BookingEndTime,BookingReasonToVisit")] Booking booking)
+        public ActionResult Create([Bind(Include = "BookingID,BookingStartTime,BookingEndTime,BookingReasonToVisit,PatientID")] Booking booking)
         {
             if (ModelState.IsValid)
             {

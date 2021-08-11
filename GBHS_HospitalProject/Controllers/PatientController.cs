@@ -62,6 +62,19 @@ namespace GBHS_HospitalProject.Controllers
             return View(BookingDtos);
         }
 
+        /*[HttpPost]*/
+        [Authorize(Roles ="Admin")]
+        public JsonResult AutoCompleteLoad(string keyword)
+        {
+            GetApplicationCookie();
+            string url = "PatientData/FindPatientsByPrefix/" + keyword;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<PatientDto> selectedPatients = response.Content.ReadAsAsync<IEnumerable<PatientDto>>().Result;
+            
+            return Json(selectedPatients.Select(p => new { label = p.PatientFirstName + " " + p.PatientLastName + "(" + (p.PatientPhoneNumber.Length==0?p.PatientEmail:p.PatientPhoneNumber) + ")", value = p.PatientID }),JsonRequestBehavior.AllowGet);
+
+        }
+
         // GET: Patient/Details/5
         [Authorize(Roles ="Admin,Guest")]
         public ActionResult Details(int? id)

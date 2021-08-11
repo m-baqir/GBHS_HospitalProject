@@ -198,5 +198,10 @@ namespace GBHS_HospitalProject.Controllers
     {
       return db.Specialists.Count(e => e.SpecialistID == id) > 0;
     }
+
+    public Specialist GetSpecialistById(int id)
+    {
+      return db.Specialists.Find(id);
+    }
   }
 }

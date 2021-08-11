@@ -46,30 +46,30 @@ namespace GBHS_HospitalProject.Controllers
             List<BookingDto> BookingDtos = new List<BookingDto>();
             Bookings.ForEach(b =>
             {
-                if(b.Patient != null && b.Specialist != null)
-                {
-                    BookingDtos.Add(
-            new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit,
-            b.Patient.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName,
-            b.Specialist.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName));
-                }
-                else if(b.Patient == null && b.Specialist == null)
-                {
-                    if(b.Specialist != null)
-                    {
-                        BookingDtos.Add(new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit, b.Specialist.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName));
-                    }
-                    else
-                    {
-                        BookingDtos.Add(new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit));
-                    }
-                    
-                }
+                BookingDto bookingDto = new BookingDto(b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit);
                 
-                
+                if(b.PatientID != null)
+                {
+                    PatientDataController patientDataController = new PatientDataController();
+                    Patient patient = patientDataController.GetPatientById((int)b.PatientID);
+                    if (patient != null)
+                    {
+                        bookingDto.PatientFirstName = patient.PatientFirstName;
+                        bookingDto.PatientLastName = patient.PatientLastName;
+                    }
+                }
+                if(b.SpecialistID != null)
+                {
+                    SpecialistsDataController specialistsDataController = new SpecialistsDataController();
+                    Specialist specialist = specialistsDataController.GetSpecialistById((int)b.SpecialistID);
+                    if (specialist != null)
+                    {
+                        bookingDto.SpecialistFirstName = specialist.SpecialistFirstName;
+                        bookingDto.SpecialistLastName = specialist.SpecialistLastName;
+                    }
+                }
+                BookingDtos.Add(bookingDto);
             }
-            
-            
         );
 
             return Ok(BookingDtos);

@@ -106,6 +106,34 @@ namespace GBHS_HospitalProject.Controllers
         }
 
         /// <summary>
+        /// Find Patients by prefix of firstname, lastname, email, or phone number
+        /// </summary>
+        /// <param name="prefix">represents prefix of firstname, lastname, email, or phone number</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: list of patients in the system
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// GET: api/PatientData/FindPatientsByPrefix/John
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(PatientDto))]
+        [Authorize(Roles = "Admin")]
+        [Route("Api/PatientData/FindPatientsByPrefix/{prefix}")]
+        public IHttpActionResult FindPatientsByPrefix(string prefix)
+        {
+            List<Patient> patients = db.Patients.Where(p => p.PatientFirstName.StartsWith(prefix)
+                                                || p.PatientLastName.StartsWith(prefix)
+                                                || p.PatientEmail.StartsWith(prefix)
+                                                || p.PatientPhoneNumber.StartsWith(prefix)).ToList();
+            List<PatientDto> patientDtos = new List<PatientDto>();
+            patients.ForEach(p => patientDtos.Add(new PatientDto(p.PatientID, p.PatientFirstName, p.PatientLastName, p.PatientPhoneNumber, p.PatientEmail, p.PatientGender)));
+            return Ok(patientDtos);
+        }
+
+        /// <summary>
         /// Update an existing patient in the system with POST Data input
         /// </summary>
         /// <param name="id">Represents the patient id primary key</param>
@@ -222,6 +250,11 @@ namespace GBHS_HospitalProject.Controllers
             db.SaveChanges();
 
             return Ok(patient);
+        }
+
+        public Patient GetPatientById(int id)
+        {
+            return db.Patients.Find(id);
         }
 
         protected override void Dispose(bool disposing)

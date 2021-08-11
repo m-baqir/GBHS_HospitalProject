@@ -2,14 +2,64 @@
 
 @{
     ViewBag.Title = "Create";
+    //Layout = null;
 }
+
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+*@
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#PatientInfo').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Patient/AutoCompleteLoad",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        keyword: request.term
+                    },
+                    success: function (data) {
+                        console.log('Success !' + data);
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.label,
+                                value: item.label,
+                                key: item.value,
+                            };
+                        }))
+                    },
+
+
+                    error: function () {
+                        alert('something went wrong !');
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $('#PatientID').val(ui.item.key);
+            }@*,
+            messages: {
+                noResults: "",
+                results: ""
+            }*@
+        });
+    })
+</script>
+
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Booking</h4>
         <hr />
@@ -29,6 +79,21 @@
                 @Html.ValidationMessageFor(model => model.BookingEndTime, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @if (User != null && User.IsInRole("Admin"))
+        {
+            <div class="form-group">
+
+                @Html.HiddenFor(model => model.PatientID)
+                @Html.Label("PatientInfo", "Patient information", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Editor("PatientInfo", new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                </div>
+
+
+
+            </div>
+        }
 
         <div class="form-group">
             @Html.LabelFor(model => model.BookingReasonToVisit, htmlAttributes: new { @class = "control-label col-md-2" })

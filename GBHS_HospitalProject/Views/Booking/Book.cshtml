@@ -13,7 +13,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.BookingStartTime, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.BookingStartTime, new { htmlAttributes = new {@readonly="readonly", @class = "form-control" } })
+            @*https://stackoverflow.com/questions/8761647/how-to-create-a-readonly-textbox-in-asp-net-mvc3-razor*@
+            @Html.EditorFor(model => model.BookingStartTime, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.BookingStartTime, "", new { @class = "text-danger" })
         </div>
     </div>
