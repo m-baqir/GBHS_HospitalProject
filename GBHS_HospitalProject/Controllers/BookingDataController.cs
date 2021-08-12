@@ -40,7 +40,7 @@ namespace GBHS_HospitalProject.Controllers
             else
             {
                 string userId = User.Identity.GetUserId();
-                Bookings = db.Bookings.Where(b => b.UserID == userId || b.PatientID == null).ToList();
+                Bookings = db.Bookings.Where(b => b.PatientID == null).ToList();
             }
             
             List<BookingDto> BookingDtos = new List<BookingDto>();
@@ -254,7 +254,7 @@ namespace GBHS_HospitalProject.Controllers
             {
                 return BadRequest(ModelState);
             }
-            booking.UserID = User.Identity.GetUserId();
+            //booking.UserID = User.Identity.GetUserId();
             db.Bookings.Add(booking);
 
             try

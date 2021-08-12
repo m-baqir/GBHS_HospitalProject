@@ -22,10 +22,6 @@ namespace GBHS_HospitalProject.Models
         [ForeignKey("Specialist")]
         public int? SpecialistID { get; set; }
         public virtual Specialist Specialist { get; set; }
-
-        [ForeignKey("ApplicationUser")]
-        public string UserID { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
     //DTO class

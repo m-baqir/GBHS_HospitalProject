@@ -232,7 +232,7 @@ namespace GBHS_HospitalProject.Controllers
                 response = client.GetAsync(url).Result;
                 PatientDto patientDto = response.Content.ReadAsAsync<PatientDto>().Result;
                 patientId = patientDto.PatientID;
-                booking.UserID = User.Identity.GetUserId();
+                //booking.UserID = User.Identity.GetUserId();
                 booking.PatientID = patientId;
             }
 
