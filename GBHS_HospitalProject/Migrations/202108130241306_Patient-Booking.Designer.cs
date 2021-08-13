@@ -7,13 +7,13 @@ namespace GBHS_HospitalProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class RelationshipAppointment_Feature : IMigrationMetadata
+    public sealed partial class PatientBooking : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RelationshipAppointment_Feature));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PatientBooking));
         
         string IMigrationMetadata.Id
         {
-            get { return "202107310331097_Relationship-Appointment_Feature"; }
+            get { return "202108130241306_Patient-Booking"; }
         }
         
         string IMigrationMetadata.Source

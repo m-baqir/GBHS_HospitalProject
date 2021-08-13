@@ -136,7 +136,7 @@ namespace GBHS_HospitalProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookingID,BookingStartTime,BookingEndTime,BookingReasonToVist")] Booking booking)
+        public ActionResult Edit([Bind(Include = "BookingID,BookingStartTime,BookingEndTime,BookingReasonToVisit")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -225,10 +225,10 @@ namespace GBHS_HospitalProject.Controllers
         {
             string url;
             HttpResponseMessage response;
-            int patientId = 0;
+            string patientId;
             if (User != null && User.IsInRole("Guest"))
             {
-                url = "patientData/FindPatientByUserId";
+                url = "patientData/FindPatientById/"+User.Identity.GetUserId();
                 response = client.GetAsync(url).Result;
                 PatientDto patientDto = response.Content.ReadAsAsync<PatientDto>().Result;
                 patientId = patientDto.PatientID;

@@ -7,13 +7,13 @@ namespace GBHS_HospitalProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class BookingRemoveFKApplicationUser : IMigrationMetadata
+    public sealed partial class PatientAppUserRelationship : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(BookingRemoveFKApplicationUser));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PatientAppUserRelationship));
         
         string IMigrationMetadata.Id
         {
-            get { return "202108122016116_Booking-Remove-FK-ApplicationUser"; }
+            get { return "202108130335099_Patient-AppUser-Relationship"; }
         }
         
         string IMigrationMetadata.Source

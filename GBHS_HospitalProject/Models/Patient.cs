@@ -9,8 +9,10 @@ namespace GBHS_HospitalProject.Models
 {
     public class Patient
     {
-        [Key]
-        public int PatientID { get; set; }
+        [Key,ForeignKey("ApplicationUser")]
+        public string PatientID { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
         public string PatientFirstName { get; set; }
         public string PatientLastName { get; set; }
         public string PatientEmail { get; set; }
@@ -19,15 +21,14 @@ namespace GBHS_HospitalProject.Models
 
         public ICollection<Booking> PatientBookings { get; set; }
 
-        [ForeignKey("ApplicationUser")]
-        public string UserID { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        
+        
     }
 
     //DTO
     public class PatientDto
     {
-        public PatientDto(int patientID, string patientFirstName, string patientLastName, string patientPhoneNumber, string patientEmail, string patientGender)
+        public PatientDto(string patientID, string patientFirstName, string patientLastName, string patientPhoneNumber, string patientEmail, string patientGender)
         {
             PatientID = patientID;
             PatientFirstName = patientFirstName;
@@ -37,7 +38,7 @@ namespace GBHS_HospitalProject.Models
             PatientGender = patientGender;
         }
 
-        public int PatientID { get; set; }
+        public string PatientID { get; set; }
         [Display(Name = "First name")]
         public string PatientFirstName { get; set; }
         [Display(Name = "Last name")]

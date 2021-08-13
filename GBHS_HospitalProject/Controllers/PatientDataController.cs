@@ -56,7 +56,7 @@ namespace GBHS_HospitalProject.Controllers
         [HttpGet]
         [ResponseType(typeof(PatientDto))]
         [Authorize(Roles ="Admin,Guest")]
-        public IHttpActionResult FindPatientById(int id)
+        public IHttpActionResult FindPatientById(string id)
         {
             Patient Patient = db.Patients.Find(id);
             if (Patient == null)
@@ -91,7 +91,7 @@ namespace GBHS_HospitalProject.Controllers
         public IHttpActionResult FindPatientByUserId()
         {
             string id = User.Identity.GetUserId();
-            Patient Patient = db.Patients.Where(p=> p.UserID == id).FirstOrDefault();
+            Patient Patient = db.Patients.Where(p=> p.PatientID == id).FirstOrDefault();
             if (Patient == null)
             {
                 return NotFound();
@@ -152,7 +152,7 @@ namespace GBHS_HospitalProject.Controllers
         [HttpPost]
         [ResponseType(typeof(void))]
         [Authorize(Roles ="Admin,Guest")]
-        public IHttpActionResult UpdatePatient(int id, Patient patient)
+        public IHttpActionResult UpdatePatient(string id, Patient patient)
         {
             if (!ModelState.IsValid)
             {
@@ -214,13 +214,13 @@ namespace GBHS_HospitalProject.Controllers
             Debug.WriteLine("PatientDataController User.Identity.GetUserId() :" + User.Identity.GetUserId());
             if (User != null && !User.IsInRole("Admin"))
             {
-                Patient.UserID = User.Identity.GetUserId();
+                Patient.PatientID = User.Identity.GetUserId();
             }
             Patient.PatientBookings = new List<Booking>();
             db.Patients.Add(Patient);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = Patient.PatientID }, Patient);
+            return CreatedAtRoute("DefaultApi", new { id = 0/*Patient.PatientID*/ }, Patient);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace GBHS_HospitalProject.Controllers
             return Ok(patient);
         }
 
-        public Patient GetPatientById(int id)
+        public Patient GetPatientById(string id)
         {
             return db.Patients.Find(id);
         }
@@ -266,7 +266,7 @@ namespace GBHS_HospitalProject.Controllers
             base.Dispose(disposing);
         }
 
-        private bool PatientExists(int id)
+        private bool PatientExists(string id)
         {
             return db.Patients.Count(e => e.PatientID == id) > 0;
         }

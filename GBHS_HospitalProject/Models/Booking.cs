@@ -16,7 +16,7 @@ namespace GBHS_HospitalProject.Models
         public string BookingReasonToVisit { get; set; }
 
         [ForeignKey("Patient")]
-        public int? PatientID { get; set; }
+        public string PatientID { get; set; }
         public virtual Patient Patient { get; set; }
 
         [ForeignKey("Specialist")]
@@ -31,7 +31,7 @@ namespace GBHS_HospitalProject.Models
         {
 
         }
-        public BookingDto(int bookingID, DateTime bookingStartTime, DateTime bookingEndTime, string bookingReasonToVisit, int patientID, string patientFirstName, string patientLastName, int specialistID, string specialistFirstName, string specialistLastName)
+        public BookingDto(int bookingID, DateTime bookingStartTime, DateTime bookingEndTime, string bookingReasonToVisit, string patientID, string patientFirstName, string patientLastName, int specialistID, string specialistFirstName, string specialistLastName)
         {
             BookingID = bookingID;
             BookingStartTime = bookingStartTime;
@@ -67,7 +67,7 @@ namespace GBHS_HospitalProject.Models
         public DateTime BookingStartTime { get; set; }
         public DateTime BookingEndTime { get; set; }
         public string BookingReasonToVisit { get; set; }
-        public int PatientID { get; set; }
+        public string PatientID { get; set; }
         public string PatientFirstName { get; set; }
         public string PatientLastName { get; set; }
         public int SpecialistID { get; set; }

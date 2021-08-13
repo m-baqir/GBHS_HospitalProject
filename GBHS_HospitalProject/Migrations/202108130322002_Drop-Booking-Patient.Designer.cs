@@ -7,13 +7,13 @@ namespace GBHS_HospitalProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdateBooking : IMigrationMetadata
+    public sealed partial class DropBookingPatient : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateBooking));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DropBookingPatient));
         
         string IMigrationMetadata.Id
         {
-            get { return "202108080344279_Update-Booking"; }
+            get { return "202108130322002_Drop-Booking-Patient"; }
         }
         
         string IMigrationMetadata.Source

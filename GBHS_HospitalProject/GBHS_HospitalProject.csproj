@@ -239,17 +239,9 @@
     <Compile Include="Migrations\202107310330205_Booking-Appointment_Feature.Designer.cs">
       <DependentUpon>202107310330205_Booking-Appointment_Feature.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202107310331097_Relationship-Appointment_Feature.cs" />
-    <Compile Include="Migrations\202107310331097_Relationship-Appointment_Feature.Designer.cs">
-      <DependentUpon>202107310331097_Relationship-Appointment_Feature.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202108041652538_Add Description to Department table.cs" />
     <Compile Include="Migrations\202108041652538_Add Description to Department table.Designer.cs">
       <DependentUpon>202108041652538_Add Description to Department table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202108050219389_UserID-FK-Booking.cs" />
-    <Compile Include="Migrations\202108050219389_UserID-FK-Booking.Designer.cs">
-      <DependentUpon>202108050219389_UserID-FK-Booking.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202108051944566_Changing.cs" />
     <Compile Include="Migrations\202108051944566_Changing.Designer.cs">
@@ -258,18 +250,6 @@
     <Compile Include="Migrations\202108052012264_changing datatype.cs" />
     <Compile Include="Migrations\202108052012264_changing datatype.Designer.cs">
       <DependentUpon>202108052012264_changing datatype.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202108061635277_UserID-FK-Patient.cs" />
-    <Compile Include="Migrations\202108061635277_UserID-FK-Patient.Designer.cs">
-      <DependentUpon>202108061635277_UserID-FK-Patient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202108080344279_Update-Booking.cs" />
-    <Compile Include="Migrations\202108080344279_Update-Booking.Designer.cs">
-      <DependentUpon>202108080344279_Update-Booking.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202108122016116_Booking-Remove-FK-ApplicationUser.cs" />
-    <Compile Include="Migrations\202108122016116_Booking-Remove-FK-ApplicationUser.Designer.cs">
-      <DependentUpon>202108122016116_Booking-Remove-FK-ApplicationUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -434,30 +414,14 @@
       <DependentUpon>202107310330205_Booking-Appointment_Feature.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107310331097_Relationship-Appointment_Feature.resx">
-      <DependentUpon>202107310331097_Relationship-Appointment_Feature.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108041652538_Add Description to Department table.resx">
       <DependentUpon>202108041652538_Add Description to Department table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202108050219389_UserID-FK-Booking.resx">
-      <DependentUpon>202108050219389_UserID-FK-Booking.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108051944566_Changing.resx">
       <DependentUpon>202108051944566_Changing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108052012264_changing datatype.resx">
       <DependentUpon>202108052012264_changing datatype.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202108061635277_UserID-FK-Patient.resx">
-      <DependentUpon>202108061635277_UserID-FK-Patient.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202108080344279_Update-Booking.resx">
-      <DependentUpon>202108080344279_Update-Booking.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202108122016116_Booking-Remove-FK-ApplicationUser.resx">
-      <DependentUpon>202108122016116_Booking-Remove-FK-ApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

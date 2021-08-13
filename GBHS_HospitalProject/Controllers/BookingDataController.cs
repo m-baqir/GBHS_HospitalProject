@@ -39,6 +39,7 @@ namespace GBHS_HospitalProject.Controllers
             }
             else
             {
+                //Only show appointments not booked by anyone.
                 string userId = User.Identity.GetUserId();
                 Bookings = db.Bookings.Where(b => b.PatientID == null).ToList();
             }
@@ -51,7 +52,7 @@ namespace GBHS_HospitalProject.Controllers
                 if(b.PatientID != null)
                 {
                     PatientDataController patientDataController = new PatientDataController();
-                    Patient patient = patientDataController.GetPatientById((int)b.PatientID);
+                    Patient patient = patientDataController.GetPatientById(b.PatientID);
                     if (patient != null)
                     {
                         bookingDto.PatientFirstName = patient.PatientFirstName;
@@ -103,7 +104,7 @@ namespace GBHS_HospitalProject.Controllers
                 bookingDto = new BookingDto(
                 booking.BookingID, booking.BookingStartTime,
                 booking.BookingEndTime, booking.BookingReasonToVisit,
-                (int)booking.PatientID, booking.Patient.PatientFirstName,
+                booking.PatientID, booking.Patient.PatientFirstName,
                 booking.Patient.PatientLastName, (int)booking.SpecialistID,
                 booking.Specialist.SpecialistFirstName, booking.Specialist.SpecialistLastName
                 );
@@ -159,7 +160,7 @@ namespace GBHS_HospitalProject.Controllers
                 {
                     bookingDtos.Add(new BookingDto(
                 b.BookingID, b.BookingStartTime, b.BookingEndTime, b.BookingReasonToVisit,
-                (int)b.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName,
+                b.PatientID, b.Patient.PatientFirstName, b.Patient.PatientLastName,
                 (int)b.SpecialistID, b.Specialist.SpecialistFirstName, b.Specialist.SpecialistLastName
                 ));
                 }
@@ -170,7 +171,7 @@ namespace GBHS_HospitalProject.Controllers
                     newBookingDto.BookingStartTime = b.BookingStartTime;
                     newBookingDto.BookingEndTime = b.BookingEndTime;
                     newBookingDto.BookingReasonToVisit = b.BookingReasonToVisit;
-                    newBookingDto.PatientID = (int)b.PatientID;
+                    newBookingDto.PatientID = b.PatientID;
                     newBookingDto.PatientFirstName = b.Patient.PatientFirstName;
                     newBookingDto.PatientLastName = b.Patient.PatientLastName;
                     bookingDtos.Add(newBookingDto);

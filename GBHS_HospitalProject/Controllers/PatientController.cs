@@ -77,7 +77,7 @@ namespace GBHS_HospitalProject.Controllers
 
         // GET: Patient/Details/5
         [Authorize(Roles ="Admin,Guest")]
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id)
         {
             GetApplicationCookie();
             DetailsPatient ViewModel = new DetailsPatient();
@@ -85,9 +85,13 @@ namespace GBHS_HospitalProject.Controllers
             HttpResponseMessage response;
             if (id == null)
             {
-                if(User!=null && User.IsInRole("Guest"))
+                if(User == null)//user did not register yet.
                 {
-                    url = "PatientData/FindPatientByUserId";
+                    return RedirectToAction("../Account/Register");
+                }
+                else if(User!=null && User.IsInRole("Guest"))
+                {
+                    url = "PatientData/FindPatientById/"+User.Identity.GetUserId();
                     response = client.GetAsync(url).Result;
                     PatientDto patientDto = response.Content.ReadAsAsync<PatientDto>().Result;
                     if(patientDto == null)
@@ -175,7 +179,7 @@ namespace GBHS_HospitalProject.Controllers
 
         // GET: Patient/Edit/5
         [Authorize]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -231,7 +235,7 @@ namespace GBHS_HospitalProject.Controllers
 
         // GET: Patient/Delete/5
         [Authorize(Roles ="Admin")]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
