@@ -238,7 +238,7 @@ namespace GBHS_HospitalProject.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(Patient))]
-        public IHttpActionResult DeletePatient(int id)
+        public IHttpActionResult DeletePatient(string id)
         {
             Patient patient = db.Patients.Find(id);
             if (patient == null)

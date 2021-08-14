@@ -98,34 +98,20 @@ namespace GBHS_HospitalProject.Controllers
             {
                 return NotFound();
             }
-            BookingDto bookingDto = null;
-            if(booking.Patient != null && booking.Specialist != null)
+            BookingDto bookingDto = new BookingDto(booking.BookingID,booking.BookingStartTime,booking.BookingEndTime,booking.BookingReasonToVisit);
+            if(booking.Patient != null)
             {
-                bookingDto = new BookingDto(
-                booking.BookingID, booking.BookingStartTime,
-                booking.BookingEndTime, booking.BookingReasonToVisit,
-                booking.PatientID, booking.Patient.PatientFirstName,
-                booking.Patient.PatientLastName, (int)booking.SpecialistID,
-                booking.Specialist.SpecialistFirstName, booking.Specialist.SpecialistLastName
-                );
+                bookingDto.PatientID = booking.PatientID;
+                bookingDto.PatientFirstName = booking.Patient.PatientFirstName;
+                bookingDto.PatientLastName = booking.Patient.PatientLastName;
+                bookingDto.PatentPhoneNumber = booking.Patient.PatientPhoneNumber;
+                
             }
-            else if(booking.Patient == null)
+            if(booking.Specialist != null)
             {
-                if(booking.Specialist != null)
-                {
-                    bookingDto = new BookingDto(
-                booking.BookingID, booking.BookingStartTime,
-                booking.BookingEndTime, booking.BookingReasonToVisit,
-                 booking.Specialist.SpecialistID,
-                booking.Specialist.SpecialistFirstName, booking.Specialist.SpecialistLastName
-                );
-                }
-                else
-                {
-                    bookingDto = new BookingDto(
-                booking.BookingID, booking.BookingStartTime,
-                booking.BookingEndTime, booking.BookingReasonToVisit);
-                }
+                bookingDto.SpecialistID = (int)booking.SpecialistID;
+                bookingDto.SpecialistFirstName = booking.Specialist.SpecialistFirstName;
+                bookingDto.SpecialistLastName = booking.Specialist.SpecialistLastName;
             }
             
             return Ok(bookingDto);

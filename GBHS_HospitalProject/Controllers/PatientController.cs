@@ -181,6 +181,7 @@ namespace GBHS_HospitalProject.Controllers
         [Authorize]
         public ActionResult Edit(string id)
         {
+            GetApplicationCookie();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -205,6 +206,7 @@ namespace GBHS_HospitalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PatientID,PatientFirstName,PatientLastName,PatientEmail,PatientPhoneNumber,PatientGender")] Patient patient)
         {
+            GetApplicationCookie();
             if (ModelState.IsValid)
             {
                 string url = "patientdata/updatepatient/" + patient.PatientID;
@@ -215,7 +217,7 @@ namespace GBHS_HospitalProject.Controllers
                 HttpResponseMessage response =  client.PostAsync(url, content).Result;
                 if(response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("List");
+                    return RedirectToAction("Details/"+patient.PatientID);
                 }
                 else
                 {
@@ -237,6 +239,7 @@ namespace GBHS_HospitalProject.Controllers
         [Authorize(Roles ="Admin")]
         public ActionResult Delete(string id)
         {
+            GetApplicationCookie();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -256,8 +259,9 @@ namespace GBHS_HospitalProject.Controllers
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles ="Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
+            GetApplicationCookie();
             string url = "patientdata/deletepatient/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

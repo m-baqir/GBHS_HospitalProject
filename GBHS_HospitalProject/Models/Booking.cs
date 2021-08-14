@@ -70,6 +70,7 @@ namespace GBHS_HospitalProject.Models
         public string PatientID { get; set; }
         public string PatientFirstName { get; set; }
         public string PatientLastName { get; set; }
+        public string PatentPhoneNumber { get; set; }//used for loading patient in booking update page
         public int SpecialistID { get; set; }
         public string SpecialistFirstName { get; set; }
         public string SpecialistLastName { get; set; }
