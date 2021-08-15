@@ -251,6 +251,14 @@
     <Compile Include="Migrations\202108052012264_changing datatype.Designer.cs">
       <DependentUpon>202108052012264_changing datatype.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108150233512_Drop-Patient-Booking.cs" />
+    <Compile Include="Migrations\202108150233512_Drop-Patient-Booking.Designer.cs">
+      <DependentUpon>202108150233512_Drop-Patient-Booking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108150240275_ApplicationUser-Patient-Booking-Relationship.cs" />
+    <Compile Include="Migrations\202108150240275_ApplicationUser-Patient-Booking-Relationship.cs">
+      <DependentUpon>202108150240275_ApplicationUser-Patient-Booking-Relationship.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -423,6 +431,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108052012264_changing datatype.resx">
       <DependentUpon>202108052012264_changing datatype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108150233512_Drop-Patient-Booking.resx">
+      <DependentUpon>202108150233512_Drop-Patient-Booking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108150240275_ApplicationUser-Patient-Booking-Relationship.resx">
+      <DependentUpon>202108150240275_ApplicationUser-Patient-Booking-Relationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
