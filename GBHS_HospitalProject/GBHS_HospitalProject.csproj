@@ -259,6 +259,10 @@
     <Compile Include="Migrations\202108150240275_ApplicationUser-Patient-Booking-Relationship.cs">
       <DependentUpon>202108150240275_ApplicationUser-Patient-Booking-Relationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108150305587_Patient-Booking-Recreation.cs" />
+    <Compile Include="Migrations\202108150305587_Patient-Booking-Recreation.Designer.cs">
+      <DependentUpon>202108150305587_Patient-Booking-Recreation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -437,6 +441,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108150240275_ApplicationUser-Patient-Booking-Relationship.resx">
       <DependentUpon>202108150240275_ApplicationUser-Patient-Booking-Relationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108150305587_Patient-Booking-Recreation.resx">
+      <DependentUpon>202108150305587_Patient-Booking-Recreation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
