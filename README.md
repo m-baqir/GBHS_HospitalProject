@@ -15,3 +15,8 @@ The remaing pages are designed for admin users and allow for modifications to th
 - ADD: Both new services and locations can be added using form elements on the NEW page, which in turn creates a new entry in the database.
 - UPDATE: Similarly, the EDIT page allows for the admin to update details of a location or service using form fields and then the change gets reflected in the database accordingly.
 - DELETE: Finally, the delete confirm page gives the admin a warning page before proceeding with the deletion of a particular entity. This applies to both services and locations. 
+---
+### Challenges and Hurdles - *Mohammad Baqir*
+- The UnAssociate method is still malfunctioning in some way that i have not been able to figure out. As such I am unable to destroy the link between a service and location.
+- We also lost a collaborator from our group a couple of weeks ago and I had helped her few times over Google Meet with getting her project, database and codebase setup.
+- Over the Aug14-15 weekend we ran into another issue pertaining to migrations. One group member had pushed their changes to github, but the update-database command kept running into errors for me. I tried different things to try to remedy the issue but my attempts were futile. Eventually, we had to wait for the other group member to make adjustments to their code and push changes again. I then had to delete my current project and then clone a new project to configure the database correctly. After that, the project was running smoothly.
