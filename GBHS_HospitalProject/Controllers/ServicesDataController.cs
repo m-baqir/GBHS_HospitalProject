@@ -22,8 +22,10 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// lists all services in the database
         /// </summary>
-        /// <returns>returns an ienumerable list of services</returns>
+        /// <returns>returns an ienumerable list of all services</returns>
+        /// GET: api/ServicesData/ListServices
         [HttpGet]
+        [Authorize(Roles = "Admin,Guest")]
         public IEnumerable<ServiceDto> ListServices()
         {
             List<Service> Services = db.Services.ToList();
@@ -42,9 +44,15 @@ namespace GBHS_HospitalProject.Controllers
             }));
             return ServiceDtos;
         }
-
+        /// <summary>
+        /// lists all services associated with a particular location
+        /// </summary>
+        /// <param name="id">locationid</param>
+        /// <returns>list of all services associated with a location</returns>
+        /// GET: api/ServicesData/ListServicesForLocation/{locationid}
         [HttpGet]
         [ResponseType(typeof(ServiceDto))]
+        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListServicesForLocation(int id)
         {
             //all services that match with locationid
@@ -69,9 +77,15 @@ namespace GBHS_HospitalProject.Controllers
 
             return Ok(ServiceDtos);
         }
-
+        /// <summary>
+        /// lists all services not associated with a location
+        /// </summary>
+        /// <param name="id">locationid</param>
+        /// <returns>list of services not associated with a location</returns>
+        /// GET: api/ServicesData/ListServicesNotForLocation/{locationid}
         [HttpGet]
         [ResponseType(typeof(ServiceDto))]
+        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListServicesNotForLocation(int id)
         {
             //all services that do not match with locationid
@@ -97,13 +111,14 @@ namespace GBHS_HospitalProject.Controllers
             return Ok(ServiceDtos);
         }
         /// <summary>
-        /// associate a service with a location given ids for both
+        /// associate a service with a location given ids for service and location
         /// </summary>
-        /// <param name="serviceid"></param>
-        /// <param name="locationid"></param>
-        /// <returns></returns>
-
+        /// <param name="serviceid">serviceid</param>
+        /// <param name="locationid">locationid</param>
+        /// <returns>adds a relationship in the bridge table between the service and location</returns>
+        /// POST: api/ServicesData/AssociateServiceWithLocation/{serviceid}/{locationid}
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("api/ServicesData/AssociateServiceWithLocation/{serviceid}/{locationid}")]
         public IHttpActionResult AssociateServiceWithLocation(int serviceid, int locationid)
         {
@@ -120,12 +135,14 @@ namespace GBHS_HospitalProject.Controllers
             return Ok();
         }
         /// <summary>
-        /// removes an association between service and location given their ids
+        /// removes an association between service and location given their serviceid and locationid
         /// </summary>
-        /// <param name="serviceid"></param>
-        /// <param name="locationid"></param>
-        /// <returns></returns>
+        /// <param name="serviceid">serviceid</param>
+        /// <param name="locationid">locationid</param>
+        /// <returns>removes the relationship in the bridge table between a service and location</returns>
+        /// POST: api/ServicesData/UnAssociateServiceWithLocation/{serviceid}/{locationid}
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("api/ServiceData/UnAssociateServiceWithLocation/{serviceid}/{locationid}")]
         public IHttpActionResult UnAssociateServiceWithLocation(int serviceid, int locationid)
         {
@@ -134,6 +151,7 @@ namespace GBHS_HospitalProject.Controllers
 
             if (SelectedService == null || SelectedLocation == null)
             {
+                Debug.WriteLine("i am here");
                 return NotFound();
             }
 
@@ -142,14 +160,16 @@ namespace GBHS_HospitalProject.Controllers
 
             return Ok();
         }
-      
+
         /// <summary>
         /// finds a specific service given its id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">serviceid</param>
         /// <returns>returns details of a particular service</returns>
+        /// GET: api/ServicesData/findservice/{id}
         [HttpGet]
         [ResponseType(typeof(ServiceDto))]
+        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult FindService(int id)
         {
             Service service = db.Services.Find(id);
@@ -176,11 +196,12 @@ namespace GBHS_HospitalProject.Controllers
         /// provides the update functionality for a specific service given its id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="service"></param>
-        /// <returns></returns>
-        // PUT: api/ServicesData/5
+        /// <param name="service">service model</param>
+        /// <returns>updates the details for a particular service</returns>
+        /// POST: api/ServicesData/UpdateService/
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult UpdateService(int id, Service service)
         {
             if (!ModelState.IsValid)
@@ -216,8 +237,14 @@ namespace GBHS_HospitalProject.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+        /// <summary>
+        /// provides ability to upload an image associated with a service
+        /// </summary>
+        /// <param name="id">serviceid</param>
+        /// <returns>adds an image to the database and links it to the service based on serviceid</returns>
+        /// POST: api/UploadServicePic
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult UploadServicePic(int id)
         {
 
@@ -293,9 +320,10 @@ namespace GBHS_HospitalProject.Controllers
         /// </summary>
         /// <param name="service"></param>
         /// <returns></returns>
-        // POST: api/ServicesData
+        /// POST: api/ServicesData/addService
         [ResponseType(typeof(Service))]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult AddService(Service service)
         {
             if (!ModelState.IsValid)
@@ -313,9 +341,10 @@ namespace GBHS_HospitalProject.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // DELETE: api/ServicesData/5
+        /// DELETE: api/ServicesData/5
         [ResponseType(typeof(Service))]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteService(int id)
         {
             Service service = db.Services.Find(id);

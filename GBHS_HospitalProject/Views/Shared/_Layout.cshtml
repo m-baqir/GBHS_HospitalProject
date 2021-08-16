@@ -32,19 +32,24 @@
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("Appointments", "List", "Booking")</li>
                             <li>@Html.ActionLink("Patients", "List", "Patient")</li>
+                            <li>@Html.ActionLink("Locations", "List", "Location")</li>
+                            <li>@Html.ActionLink("Services", "List", "Services")</li>
                         }
                         else
                         {
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("Appointments", "List", "Booking")</li>
                             <li>@Html.ActionLink("Patient Information", "Details", "Patient")</li>
+                            <li>@Html.ActionLink("Locations", "List", "Location")</li>
+                            <li>@Html.ActionLink("Services", "List", "Services")</li>
                         }
                     }
                     else
                     {
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("Book an appointment", "Book", "Booking")</li>
-                        
+                        <li>@Html.ActionLink("Locations", "List", "Location")</li>
+                        <li>@Html.ActionLink("Services", "List", "Services")</li>
                     }
 
 

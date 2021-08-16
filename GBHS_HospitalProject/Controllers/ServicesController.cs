@@ -24,7 +24,8 @@ namespace GBHS_HospitalProject.Controllers
         /// this method lists all services in the database
         /// </summary>
         /// <returns>returns list of servicedtos</returns>
-        /// GET: ad/list
+        /// GET: services/list
+        [Authorize(Roles = "Admin,Guest")]
         public ActionResult List()
         {
             string url = "servicesdata/listservices";
@@ -38,6 +39,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <param name="id"></param>
         /// <returns>returns servicedto object to the view</returns>
         // GET: Services/Details/5
+        [Authorize(Roles = "Admin,Guest")]
         public ActionResult Details(int id)
         {
             DetailsService ViewModel = new DetailsService();
@@ -69,8 +71,15 @@ namespace GBHS_HospitalProject.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Associate method to link a service and location together in the bridge table
+        /// </summary>
+        /// <param name="id">service id</param>
+        /// <param name="locationid">location id</param>
+        /// <returns></returns>
+        /// POST: services/associate/{id}/{locationid}
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Associate(int id, int locationid)
         {
             string url = "servicesdata/associateservicewithlocation/" + id+"/"+locationid;
@@ -80,8 +89,16 @@ namespace GBHS_HospitalProject.Controllers
 
             return RedirectToAction("Details/" + id);
         }
-
-        [HttpGet]
+        /// <summary>
+        /// removes the link between a service and location in the bridge table.
+        /// TODO: currently running into an error with this method. the method gets the call but does not update the relationship in the table.
+        /// </summary>
+        /// <param name="id">serviceid</param>
+        /// <param name="locationid">locationid</param>
+        /// <returns></returns>
+        /// POST: services/unassocaite/{id}/{locationid}
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult UnAssociate(int id, int locationid)
         {
             string url = "servicesdata/unassociateservicewithlocation/" + id + "/" + locationid;
@@ -95,7 +112,8 @@ namespace GBHS_HospitalProject.Controllers
         /// this method presents the form elements tot he user to create a new service in the database
         /// </summary>
         /// <returns></returns>
-        // GET: Services/Create
+        // GET: Services/NEW
+        [Authorize(Roles = "Admin")]
         public ActionResult New()
         {
             string url = "locationsdata/listlocations";
@@ -110,6 +128,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <returns></returns>
         // POST: Services/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Service service)
         {
             string url = "servicesdata/addservice";
@@ -136,6 +155,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <returns></returns>
         // GET: Services/Edit/5
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             UpdateService ViewModel = new UpdateService();
@@ -162,6 +182,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <returns></returns>
         // POST: Services/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Update(int id, Service service)
         {
             string url = "servicesdata/updateservice/" + id;
@@ -185,6 +206,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: Services/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "servicesdata/findservice/" + id;
@@ -199,6 +221,7 @@ namespace GBHS_HospitalProject.Controllers
         /// <returns></returns>
         // POST: Services/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             string url = "servicesdata/deleteservice/" + id;

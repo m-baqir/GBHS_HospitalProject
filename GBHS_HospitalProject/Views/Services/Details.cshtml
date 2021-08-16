@@ -25,17 +25,36 @@
     }
     <div><img style="display:block; max-width:100%;" alt="@Model.SelectedService.ServiceName" src="@imageurl" /></div>
 </div>
-    <div>
-        <h2>Locations with @Model.SelectedService.ServiceName:</h2>
-        @foreach (var location in Model.LocationsWithService)
-        {
-            <a href="/location/details/@location.LocationID">@location.LocationName</a>
-        }
-    </div>
-    <div>
-        <h2>Locations without @Model.SelectedService.ServiceName:</h2>
-        @foreach (var location in Model.LocationsWithoutService)
-        {
-            <a href="/location/details/@location.LocationID">@location.LocationName</a>
-        }
-    </div>
+<div id="locationwservice">
+    <h2>Locations with @Model.SelectedService.ServiceName:</h2>
+    @foreach (var location in Model.LocationsWithService)
+    {
+        <a href="/location/details/@location.LocationID">@location.LocationName</a>
+    }
+    <p>To remove this service from any location select it below:</p>
+    <form method="POST" action="/services/UnAssociate/@Model.SelectedService.ServiceID">
+        <select name="LocationID">
+            <option value="">Select Location</option>
+            @foreach (var location in Model.LocationsWithService)
+            {
+                <option value="@location.LocationID">@location.LocationName</option>
+            }
+
+        </select>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+<div>
+    <p>To add this service to another location, select the location below:</p>
+    <form method="POST" action="/services/Associate/@Model.SelectedService.ServiceID">
+        <select name="LocationID">
+            <option value="">Select Location</option>
+            @foreach (var location in Model.LocationsWithoutService)
+            {
+                <option value="@location.LocationID">@location.LocationName</option>
+            }
+
+        </select>
+        <input type="submit" value="Submit" />
+    </form>
+</div>

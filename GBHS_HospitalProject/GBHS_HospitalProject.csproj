@@ -378,6 +378,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Locations\" />
     <Folder Include="Content\Images\Services\" />
     <Folder Include="Views\ServiceData\" />
     <Folder Include="Views\SpecialistDetails\" />

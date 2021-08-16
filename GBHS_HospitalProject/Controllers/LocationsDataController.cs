@@ -18,10 +18,11 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// return all locations in the db
         /// </summary>
-        /// <returns></returns>
-        // GET: api/LocationsData
+        /// <returns>list of all locations</returns>
+        // GET: api/LocationsData/ListLocations
         [HttpGet]
         [ResponseType(typeof(LocationDto))]
+        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListLocations()
         {
             List<Location> Locations = db.Locations.ToList();
@@ -43,10 +44,12 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// returns list of locations for a particular service
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">service id</param>
+        /// <returns>list of locations linked with the particular service</returns>
+        /// GET: api/LocationsData/ListLocationsforservice/{id}
         [HttpGet]
         [ResponseType(typeof(LocationDto))]
+        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListLocationsforService (int id)
         {
             List<Location> Locations = db.Locations.Where(
@@ -70,10 +73,12 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// list of locations without the particular serviceid
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">service id</param>
+        /// <returns>list of locations not linked with a particular service</returns>
+        /// GET: api/LocationsData/ListLocationsWithoutService/{id}
         [HttpGet]
         [ResponseType(typeof(LocationDto))]
+        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListLocationsWithoutService(int id)
         {
             List<Location> Locations = db.Locations.Where(
@@ -97,11 +102,12 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// returns details for a particular location
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        // GET: api/LocationsData/5
+        /// <param name="id">location id</param>
+        /// <returns>details for a particular location</returns>
+        // GET: api/LocationsData/findlocation/{id]
         [ResponseType(typeof(LocationDto))]
         [HttpGet]
+        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult FindLocation(int id)
         {
             Location location = db.Locations.Find(id);
@@ -126,12 +132,13 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// updates a particular location information
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="location"></param>
-        /// <returns></returns>
-        // PUT: api/LocationsData/5
+        /// <param name="id">location id</param>
+        /// <param name="location">location information(object)</param>
+        /// <returns>updates the particular location information in the database</returns>
+        // POST: api/LocationsData/updatelocation/{id}/{location}
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult UpdateLocation(int id, Location location)
         {
             if (!ModelState.IsValid)
@@ -167,11 +174,12 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// adds a new location to the database
         /// </summary>
-        /// <param name="location"></param>
-        /// <returns></returns>
-        // POST: api/LocationsData
+        /// <param name="location">location object</param>
+        /// <returns>adds a new row of data in the locations table. creates a new location</returns>
+        // POST: api/LocationsData/addlocation
         [ResponseType(typeof(Location))]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult AddLocation(Location location)
         {
             if (!ModelState.IsValid)
@@ -189,9 +197,10 @@ namespace GBHS_HospitalProject.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // DELETE: api/LocationsData/5
+        // DELETE: api/LocationsData/deletelocation/5
         [ResponseType(typeof(Location))]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteLocation(int id)
         {
             Location location = db.Locations.Find(id);

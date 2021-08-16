@@ -23,8 +23,9 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// list of locations
         /// </summary>
-        /// <returns></returns>
-        // GET: Location
+        /// <returns>list of all locations in the db</returns>
+        // GET: Location/list
+        [Authorize(Roles = "Admin,Guest")]
         public ActionResult List()
         {
             string url = "locationsdata/listlocations";
@@ -35,9 +36,10 @@ namespace GBHS_HospitalProject.Controllers
         /// <summary>
         /// details page of a location
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        // GET: Location/Details/5
+        /// <param name="id">location id</param>
+        /// <returns>displays the details of a particular location given its id</returns>
+        // GET: Location/Details/{id}
+        [Authorize(Roles = "Admin,Guest")]
         public ActionResult Details(int id)
         {
             DetailsLocation ViewModel = new DetailsLocation();
@@ -68,8 +70,12 @@ namespace GBHS_HospitalProject.Controllers
 
             return View();
         }
-
-        // GET: Location/Create
+        /// <summary>
+        /// presents the form elements to create a new location model
+        /// </summary>
+        /// <returns></returns>
+        // GET: Location/NEW
+        [Authorize(Roles = "Admin")]
         public ActionResult New()
         {
             string url = "servicesdata/listservices";
@@ -77,9 +83,14 @@ namespace GBHS_HospitalProject.Controllers
             IEnumerable<ServiceDto> ServiceOptions = response.Content.ReadAsAsync<IEnumerable<ServiceDto>>().Result;
             return View(ServiceOptions);           
         }
-
+        /// <summary>
+        /// adds the new location object created in NEW into the database
+        /// </summary>
+        /// <param name="location">locationobject</param>
+        /// <returns></returns>
         // POST: Location/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Location location)
         {
             string url = "locationsdata/addlocation";
@@ -102,8 +113,13 @@ namespace GBHS_HospitalProject.Controllers
                 return RedirectToAction("Error");
             }
         }
-
+        /// <summary>
+        /// presents the edit form fields to update details of a particular location
+        /// </summary>
+        /// <param name="id">location id</param>
+        /// <returns>new details of a location model</returns>
         // GET: Location/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             UpdateLocation ViewModel = new UpdateLocation();
@@ -120,9 +136,15 @@ namespace GBHS_HospitalProject.Controllers
 
             return View(ViewModel);
         }
-
-        // POST: Location/Edit/5
+        /// <summary>
+        /// updates the current location details with the new details given in the EDIT method
+        /// </summary>
+        /// <param name="id">location id</param>
+        /// <param name="location">location model</param>
+        /// <returns>updates the details in the database</returns>
+        // POST: Location/Update/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Update(int id, Location location)
         {
             string url = "locationsdata/updatelocation/" + id;
@@ -141,8 +163,13 @@ namespace GBHS_HospitalProject.Controllers
                 return RedirectToAction("Error");
             }
         }
-
+        /// <summary>
+        /// presents a warning page before going ahead with deletion of a location
+        /// </summary>
+        /// <param name="id">location id</param>
+        /// <returns></returns>
         // GET: Location/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "locationsdata/findlocation/" + id;
@@ -150,9 +177,14 @@ namespace GBHS_HospitalProject.Controllers
             LocationDto SelectedLocation = response.Content.ReadAsAsync<LocationDto>().Result;
             return View(SelectedLocation);
         }
-
+        /// <summary> 
+        /// deletes a particular location given its id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: Location/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             string url = "locationsdata/deletelocation/" + id;
