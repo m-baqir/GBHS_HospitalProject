@@ -25,7 +25,6 @@ namespace GBHS_HospitalProject.Controllers
         /// <returns>returns an ienumerable list of all services</returns>
         /// GET: api/ServicesData/ListServices
         [HttpGet]
-        [Authorize(Roles = "Admin,Guest")]
         public IEnumerable<ServiceDto> ListServices()
         {
             List<Service> Services = db.Services.ToList();
@@ -52,7 +51,6 @@ namespace GBHS_HospitalProject.Controllers
         /// GET: api/ServicesData/ListServicesForLocation/{locationid}
         [HttpGet]
         [ResponseType(typeof(ServiceDto))]
-        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListServicesForLocation(int id)
         {
             //all services that match with locationid
@@ -85,7 +83,6 @@ namespace GBHS_HospitalProject.Controllers
         /// GET: api/ServicesData/ListServicesNotForLocation/{locationid}
         [HttpGet]
         [ResponseType(typeof(ServiceDto))]
-        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListServicesNotForLocation(int id)
         {
             //all services that do not match with locationid
@@ -169,7 +166,6 @@ namespace GBHS_HospitalProject.Controllers
         /// GET: api/ServicesData/findservice/{id}
         [HttpGet]
         [ResponseType(typeof(ServiceDto))]
-        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult FindService(int id)
         {
             Service service = db.Services.Find(id);

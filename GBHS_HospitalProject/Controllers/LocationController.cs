@@ -25,7 +25,6 @@ namespace GBHS_HospitalProject.Controllers
         /// </summary>
         /// <returns>list of all locations in the db</returns>
         // GET: Location/list
-        [Authorize(Roles = "Admin,Guest")]
         public ActionResult List()
         {
             string url = "locationsdata/listlocations";
@@ -39,7 +38,6 @@ namespace GBHS_HospitalProject.Controllers
         /// <param name="id">location id</param>
         /// <returns>displays the details of a particular location given its id</returns>
         // GET: Location/Details/{id}
-        [Authorize(Roles = "Admin,Guest")]
         public ActionResult Details(int id)
         {
             DetailsLocation ViewModel = new DetailsLocation();

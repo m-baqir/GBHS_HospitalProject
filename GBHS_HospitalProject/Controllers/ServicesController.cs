@@ -25,7 +25,6 @@ namespace GBHS_HospitalProject.Controllers
         /// </summary>
         /// <returns>returns list of servicedtos</returns>
         /// GET: services/list
-        [Authorize(Roles = "Admin,Guest")]
         public ActionResult List()
         {
             string url = "servicesdata/listservices";
@@ -39,7 +38,6 @@ namespace GBHS_HospitalProject.Controllers
         /// <param name="id"></param>
         /// <returns>returns servicedto object to the view</returns>
         // GET: Services/Details/5
-        [Authorize(Roles = "Admin,Guest")]
         public ActionResult Details(int id)
         {
             DetailsService ViewModel = new DetailsService();

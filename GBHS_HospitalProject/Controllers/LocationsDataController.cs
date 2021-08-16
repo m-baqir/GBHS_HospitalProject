@@ -22,7 +22,6 @@ namespace GBHS_HospitalProject.Controllers
         // GET: api/LocationsData/ListLocations
         [HttpGet]
         [ResponseType(typeof(LocationDto))]
-        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListLocations()
         {
             List<Location> Locations = db.Locations.ToList();
@@ -49,7 +48,6 @@ namespace GBHS_HospitalProject.Controllers
         /// GET: api/LocationsData/ListLocationsforservice/{id}
         [HttpGet]
         [ResponseType(typeof(LocationDto))]
-        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListLocationsforService (int id)
         {
             List<Location> Locations = db.Locations.Where(
@@ -78,7 +76,6 @@ namespace GBHS_HospitalProject.Controllers
         /// GET: api/LocationsData/ListLocationsWithoutService/{id}
         [HttpGet]
         [ResponseType(typeof(LocationDto))]
-        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult ListLocationsWithoutService(int id)
         {
             List<Location> Locations = db.Locations.Where(
@@ -107,7 +104,6 @@ namespace GBHS_HospitalProject.Controllers
         // GET: api/LocationsData/findlocation/{id]
         [ResponseType(typeof(LocationDto))]
         [HttpGet]
-        [Authorize(Roles = "Admin,Guest")]
         public IHttpActionResult FindLocation(int id)
         {
             Location location = db.Locations.Find(id);
