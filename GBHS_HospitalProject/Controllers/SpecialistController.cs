@@ -19,7 +19,9 @@ namespace GBHS_HospitalProject.Controllers
       client = new HttpClient();
       client.BaseAddress = new Uri("https://localhost:44389/api/");
     }
+
     // GET: Specialist/List
+    [Authorize(Roles = "Admin,Guest")]
     public ActionResult List()
     {
       string url = "specialistsdata/listspecialists";
@@ -31,8 +33,11 @@ namespace GBHS_HospitalProject.Controllers
     }
 
     // GET: Specialist/Details/5
+    [Authorize(Roles = "Admin,Guest")]
     public ActionResult Details(int id)
     {
+      SpecialistDetails ViewModel = new SpecialistDetails();
+
       string url = "specialistsdata/findspecialist/" + id;
 
       HttpResponseMessage response = client.GetAsync(url).Result;

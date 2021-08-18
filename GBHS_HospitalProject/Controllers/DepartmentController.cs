@@ -1,4 +1,5 @@
 ﻿using GBHS_HospitalProject.Models;
+using GBHS_HospitalProject.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,6 +21,7 @@ namespace GBHS_HospitalProject.Controllers
       client.BaseAddress = new Uri("https://localhost:44389/api/");
     }
     // GET: Department/List
+    [Authorize(Roles = "Admin,Guest")]
     public ActionResult List()
     {
       string url = "departmentsdata/listdepartments";
@@ -31,19 +33,24 @@ namespace GBHS_HospitalProject.Controllers
     }
 
     // GET: Department/Details/5
+    [Authorize(Roles = "Admin,Guest")]
     public ActionResult Details(int id)
     {
+      DetailsDepartment ViewModel = new DetailsDepartment();
+
       string url = "departmentsdata/finddepartment/" + id;
 
       HttpResponseMessage response = client.GetAsync(url).Result;
-      Department SelectedDepartment = response.Content.ReadAsAsync<Department>().Result;
+      DepartmentDto SelectedDepartment = response.Content.ReadAsAsync<DepartmentDto>().Result;
+      ViewModel.selectedDepartment = SelectedDepartment;
       //Debug.WriteLine(SelectedDepartment.DepartmentName);
-      if (SelectedDepartment == null)
-      {
-        return HttpNotFound();
-      }
 
-      return View(SelectedDepartment);
+      url = "specialistsdata/listspecialistsfordepartment/" + id;
+      response = client.GetAsync(url).Result;
+      IEnumerable<SpecialistDto> RelatedSpecialists = response.Content.ReadAsAsync<IEnumerable<SpecialistDto>>().Result;
+      ViewModel.relatedSpecialists = RelatedSpecialists;
+
+      return View(ViewModel);
     }
 
     public ActionResult Error()

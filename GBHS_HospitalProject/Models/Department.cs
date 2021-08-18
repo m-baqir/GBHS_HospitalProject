@@ -19,4 +19,15 @@ namespace GBHS_HospitalProject.Models
     public string Description { get; set; }
 
   }
+  public class DepartmentDto
+  {
+    [Display(Name = "ID")]
+    public int DepartmentID { get; set; }
+    [Display(Name = "Department Name")]
+
+    public string DepartmentName { get; set; }
+    [DataType(DataType.MultilineText)]
+    public string Description { get; set; }
+
+  }
 }

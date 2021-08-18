@@ -16,9 +16,13 @@
     <th>
       @Html.DisplayNameFor(model => model.Description)
     </th>
-    <th>
-      Actions
-    </th>
+    @if (User.IsInRole("Admin"))
+    {
+      <th>
+        Actions
+      </th>
+    }
+
     @*@if (User.IsInRole("Admin"))
     {
       <th>@Html.DisplayNameFor(model => model.PatientFirstName)</th>
@@ -53,11 +57,15 @@
     <td>
       @Html.DisplayFor(modelItem => item.SpecialistLastName)
     </td>*@
-  <td>
-    @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
-    @Html.ActionLink("Details", "Details", new { id = item.DepartmentID }) |
-    @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
-  </td>
+  @if (User.IsInRole("Admin"))
+  {
+    <td>
+      @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
+      @Html.ActionLink("Details", "Details", new { id = item.DepartmentID }) |
+      @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
+    </td>
+  }
+
 </tr>
   }
 

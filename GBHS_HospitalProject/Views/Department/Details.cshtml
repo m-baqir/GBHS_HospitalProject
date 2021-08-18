@@ -1,4 +1,4 @@
-﻿@model GBHS_HospitalProject.Models.Department
+﻿@model GBHS_HospitalProject.Models.ViewModels.DetailsDepartment
 @{
   ViewBag.Title = "Details";
 }
@@ -9,26 +9,43 @@
   <hr />
   <dl class="dl-horizontal">
     <dt>
-      @Html.DisplayNameFor(model => model.DepartmentName)
+      @Html.DisplayNameFor(model => model.selectedDepartment.DepartmentName)
     </dt>
 
     <dd>
-      @Html.DisplayFor(model => model.DepartmentName)
+      @Html.DisplayFor(model => model.selectedDepartment.DepartmentName)
     </dd>
 
     <dt>
-      @Html.DisplayNameFor(model => model.Description)
+      @Html.DisplayNameFor(model => model.selectedDepartment.Description)
+      <hr />
     </dt>
 
     <dd>
-      @Html.DisplayFor(model => model.Description)
+      @Html.DisplayFor(model => model.selectedDepartment.Description)
+      <hr />
     </dd>
+
+    
+
+    <dt>
+      <p>List of Specialist working for @Model.selectedDepartment.DepartmentName</p>
+     </dt>
+    <dd>
+      @foreach (var specialist in Model.relatedSpecialists)
+      {
+        <div><a href="/Specialist/Details/@specialist.SpecialistID">Doctor @specialist.SpecialistFirstName @specialist.SpecialistLastName</a></div>
+
+      }
+    </dd>
+      
 
 
 
   </dl>
 </div>
 <p class="float-right">
-  @Html.ActionLink("Edit", "Edit", new { id = Model.DepartmentID }) |
+  @Html.ActionLink("Edit", "Edit", new { id = Model.selectedDepartment.DepartmentID }) |
+  @Html.ActionLink("Delete", "Delete", new { id = Model.selectedDepartment.DepartmentID }) |
   @Html.ActionLink("Back to List", "List")
 </p>

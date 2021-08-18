@@ -28,10 +28,27 @@ namespace GBHS_HospitalProject.Controllers
     /// // GET: api/SpecialistsData/ListSpecialists
     /// </example>
     [HttpGet]
-    [ResponseType(typeof(Specialist))]
+    [ResponseType(typeof(SpecialistDto))]
     public IEnumerable<SpecialistDto> ListSpecialists()
     {
       List<Specialist> Specialists = db. Specialists.ToList();
+      List<SpecialistDto> SpecialistDtos = new List<SpecialistDto>();
+
+      Specialists.ForEach(s => SpecialistDtos.Add(new SpecialistDto()
+      {
+        SpecialistID = s.SpecialistID,
+        SpecialistFirstName = s.SpecialistFirstName,
+        SpecialistLastName = s.SpecialistLastName,
+        DepartmentID = s.Departments.DepartmentID,
+        DepartmentName = s.Departments.DepartmentName
+      }));
+      return SpecialistDtos;
+    }
+
+    [HttpGet]
+    public IEnumerable<SpecialistDto> ListSpecialistsForDepartment(int id)
+    {
+      List<Specialist> Specialists = db.Specialists.Where(s => s.DepartmentID == id).ToList();
       List<SpecialistDto> SpecialistDtos = new List<SpecialistDto>();
 
       Specialists.ForEach(s => SpecialistDtos.Add(new SpecialistDto()

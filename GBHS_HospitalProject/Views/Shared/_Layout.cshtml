@@ -23,37 +23,41 @@
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (User != null)
-                    {
-                        //TODO:Admin can see the list of patients, appointments
-                        if (User.IsInRole("Admin"))
-                        {
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Appointments", "List", "Booking")</li>
-                            <li>@Html.ActionLink("Patients", "List", "Patient")</li>
-                            <li>@Html.ActionLink("Locations", "List", "Location")</li>
-                            <li>@Html.ActionLink("Services", "List", "Services")</li>
-                        }
-                        else
-                        {
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Appointments", "List", "Booking")</li>
-                            <li>@Html.ActionLink("Patient Information", "Details", "Patient")</li>
-                            <li>@Html.ActionLink("Locations", "List", "Location")</li>
-                            <li>@Html.ActionLink("Services", "List", "Services")</li>
-                        }
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Book an appointment", "Book", "Booking")</li>
-                        <li>@Html.ActionLink("Locations", "List", "Location")</li>
-                        <li>@Html.ActionLink("Services", "List", "Services")</li>
-                    }
+              <ul class="nav navbar-nav">
+                @if (User != null)
+                {
+                  //TODO:Admin can see the list of patients, appointments
+                  if (User.IsInRole("Admin"))
+                  {
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Appointments", "List", "Booking")</li>
+                    <li>@Html.ActionLink("Patients", "List", "Patient")</li>
+                    <li>@Html.ActionLink("Locations", "List", "Location")</li>
+                    <li>@Html.ActionLink("Services", "List", "Services")</li>
+                    <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                    <li>@Html.ActionLink("Specialists", "List", "Specialist")</li>
+                  }
+                  else
+                  {
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Appointments", "List", "Booking")</li>
+                    <li>@Html.ActionLink("Patient Information", "Details", "Patient")</li>
+                    <li>@Html.ActionLink("Locations", "List", "Location")</li>
+                    <li>@Html.ActionLink("Services", "List", "Services")</li>
+                    <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                    <li>@Html.ActionLink("Specialists", "List", "Specialist")</li>
+                  }
+                }
+                else
+                {
+                  <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                  <li>@Html.ActionLink("Book an appointment", "Book", "Booking")</li>
+                  <li>@Html.ActionLink("Locations", "List", "Location")</li>
+                  <li>@Html.ActionLink("Services", "List", "Services")</li>
+                }
 
 
-                </ul>
+              </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
