@@ -19,7 +19,7 @@ namespace GBHS_HospitalProject.Controllers
     {
         private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
-        ApplicationDbContext db = new ApplicationDbContext();
+        HospitalDbContext db = new HospitalDbContext();
         
         static PatientController()
         {
@@ -30,7 +30,7 @@ namespace GBHS_HospitalProject.Controllers
             };
 
             client = new HttpClient(handler);
-            client.BaseAddress = new Uri("https://localhost:44389/api/");
+            client.BaseAddress = new Uri("http://gbhshospitalproject-env.eba-smcw2vre.us-east-2.elasticbeanstalk.com/api/");
         }
 
         private void GetApplicationCookie()

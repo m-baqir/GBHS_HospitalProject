@@ -14,7 +14,7 @@ namespace GBHS_HospitalProject.Controllers
 {
     public class LocationsDataController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private HospitalDbContext db = new HospitalDbContext();
         /// <summary>
         /// return all locations in the db
         /// </summary>

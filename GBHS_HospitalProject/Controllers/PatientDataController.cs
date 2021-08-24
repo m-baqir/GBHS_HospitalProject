@@ -17,7 +17,7 @@ namespace GBHS_HospitalProject.Controllers
 {
     public class PatientDataController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private HospitalDbContext db = new HospitalDbContext();
 
         /// <summary>
         /// Return all patients

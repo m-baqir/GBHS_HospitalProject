@@ -20,10 +20,10 @@ namespace GBHS_HospitalProject.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class HospitalDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public HospitalDbContext()
+            : base(AWSConnector.GetRDSConnectionString())
         {
         }
 
@@ -39,9 +39,9 @@ namespace GBHS_HospitalProject.Models
         public DbSet<Patient> Patients { get; set; }
         //Add Booking entity to the system
         public DbSet<Booking> Bookings { get; set; }
-        public static ApplicationDbContext Create()
+        public static HospitalDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new HospitalDbContext();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace GBHS_HospitalProject.Controllers
 {
     public class BookingDataController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private HospitalDbContext db = new HospitalDbContext();
 
         /// <summary>
         /// Get all bookings in the system
